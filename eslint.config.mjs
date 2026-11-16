@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Video promocional (HTML + scripts de render), no es parte de la app.
+    "promo/**",
   ]),
 ]);
 
