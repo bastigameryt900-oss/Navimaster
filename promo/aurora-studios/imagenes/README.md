@@ -18,6 +18,7 @@ Publicaciones para Instagram (1080×1350) e historias (1080×1920), con la marca
 | `historia-01-cotiza.png` | "¿Tienes una idea? La hacemos realidad." |
 | `historia-02-nuevo-apps-juegos.png` | Anuncio de apps y juegos |
 | `historia-03-precios.png` | Precios en formato historia |
+| `portada-video-principal.png` | Portada (miniatura) del video principal para TikTok / Reels; lo importante queda dentro del recorte 4:5 de la grilla |
 
 Los posts 01 a 10 funcionan también como un carrusel en ese orden.
 Para editarlas: cambia `index.html` y ejecuta `node render.mjs`.
