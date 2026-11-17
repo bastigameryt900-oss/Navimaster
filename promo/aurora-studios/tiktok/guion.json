@@ -1,0 +1,29 @@
+{
+  "_nota": "Cada línea es un subtítulo. 'voz' es lo que lee el narrador cuando difiere del texto en pantalla. 'pausa' son los segundos de silencio después.",
+  "lineas": [
+    {"id": "h1",  "texto": "Cuando le mandas un mensaje", "pausa": 0.05},
+    {"id": "h2",  "texto": "a alguien en Estados Unidos,", "pausa": 0.15},
+    {"id": "h3",  "texto": "tu mensaje no viaja por el cielo", "pausa": 0.05},
+    {"id": "h4",  "texto": "ni por un satélite.", "pausa": 0.25},
+    {"id": "h5",  "texto": "Baja hasta el fondo del océano", "pausa": 0.05},
+    {"id": "h6",  "texto": "y viaja por un cable", "pausa": 0.05},
+    {"id": "h7",  "texto": "tan delgado como una manguera.", "pausa": 0.25},
+    {"id": "h8",  "texto": "Desde Valparaíso, por ejemplo,", "pausa": 0.05},
+    {"id": "h9",  "texto": "sale un cable hasta Los Ángeles:", "pausa": 0.1},
+    {"id": "h10", "texto": "más de 10.000 km bajo el mar.", "voz": "más de diez mil kilómetros bajo el mar.", "pausa": 0.25},
+    {"id": "h11", "texto": "Tu mensaje viaja como luz", "pausa": 0.05},
+    {"id": "h12", "texto": "a 200.000 km por segundo", "voz": "a doscientos mil kilómetros por segundo,", "pausa": 0.05},
+    {"id": "h13", "texto": "y cruza el océano", "pausa": 0.05},
+    {"id": "h14", "texto": "en menos de una décima de segundo.", "pausa": 0.3},
+    {"id": "h15", "texto": "Pero ojo: a veces", "voz": "Pero ojo, a veces", "pausa": 0.05},
+    {"id": "h16", "texto": "los tiburones muerden estos cables…", "voz": "los tiburones muerden estos cables.", "pausa": 0.55},
+    {"id": "p1",  "texto": "Aurora Studios", "voz": "Aurora Estudios.", "pausa": 0.1},
+    {"id": "p2",  "texto": "tu estudio de tecnología", "pausa": 0.03},
+    {"id": "p3",  "texto": "en la V Región", "voz": "en la Quinta Región.", "pausa": 0.2},
+    {"id": "p4",  "texto": "páginas web, bots y videos", "voz": "Páginas web, bots y videos,", "pausa": 0.05},
+    {"id": "p5",  "texto": "y ahora también apps y juegos", "voz": "y ahora también, apps y juegos.", "pausa": 0.25},
+    {"id": "p6",  "texto": "si estás interesado", "voz": "Si estás interesado,", "pausa": 0.03},
+    {"id": "p7",  "texto": "mándanos un mensaje", "voz": "mándanos un mensaje.", "pausa": 0.2},
+    {"id": "p8",  "texto": "(ningún tiburón lo va a morder)", "voz": "Ningún tiburón lo va a morder.", "pausa": 1.6}
+  ]
+}

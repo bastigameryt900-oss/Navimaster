@@ -1,0 +1,149 @@
+{
+ "duracion": 44.125,
+ "lineas": [
+  {
+   "id": "h1",
+   "texto": "Cuando le mandas un mensaje",
+   "ini": 0.25,
+   "fin": 1.966
+  },
+  {
+   "id": "h2",
+   "texto": "a alguien en Estados Unidos,",
+   "ini": 2.016,
+   "fin": 3.524
+  },
+  {
+   "id": "h3",
+   "texto": "tu mensaje no viaja por el cielo",
+   "ini": 3.674,
+   "fin": 5.598
+  },
+  {
+   "id": "h4",
+   "texto": "ni por un satélite.",
+   "ini": 5.648,
+   "fin": 6.872
+  },
+  {
+   "id": "h5",
+   "texto": "Baja hasta el fondo del océano",
+   "ini": 7.122,
+   "fin": 8.826
+  },
+  {
+   "id": "h6",
+   "texto": "y viaja por un cable",
+   "ini": 8.876,
+   "fin": 10.132
+  },
+  {
+   "id": "h7",
+   "texto": "tan delgado como una manguera.",
+   "ini": 10.182,
+   "fin": 11.857
+  },
+  {
+   "id": "h8",
+   "texto": "Desde Valparaíso, por ejemplo,",
+   "ini": 12.107,
+   "fin": 13.862
+  },
+  {
+   "id": "h9",
+   "texto": "sale un cable hasta Los Ángeles:",
+   "ini": 13.912,
+   "fin": 15.811
+  },
+  {
+   "id": "h10",
+   "texto": "más de 10.000 km bajo el mar.",
+   "ini": 15.911,
+   "fin": 18.011
+  },
+  {
+   "id": "h11",
+   "texto": "Tu mensaje viaja como luz",
+   "ini": 18.261,
+   "fin": 19.934
+  },
+  {
+   "id": "h12",
+   "texto": "a 200.000 km por segundo",
+   "ini": 19.984,
+   "fin": 22.261
+  },
+  {
+   "id": "h13",
+   "texto": "y cruza el océano",
+   "ini": 22.311,
+   "fin": 23.533
+  },
+  {
+   "id": "h14",
+   "texto": "en menos de una décima de segundo.",
+   "ini": 23.583,
+   "fin": 25.508
+  },
+  {
+   "id": "h15",
+   "texto": "Pero ojo: a veces",
+   "ini": 25.808,
+   "fin": 26.973
+  },
+  {
+   "id": "h16",
+   "texto": "los tiburones muerden estos cables…",
+   "ini": 27.023,
+   "fin": 29.17
+  },
+  {
+   "id": "p1",
+   "texto": "Aurora Studios",
+   "ini": 29.72,
+   "fin": 30.721
+  },
+  {
+   "id": "p2",
+   "texto": "tu estudio de tecnología",
+   "ini": 30.821,
+   "fin": 32.327
+  },
+  {
+   "id": "p3",
+   "texto": "en la V Región",
+   "ini": 32.357,
+   "fin": 33.554
+  },
+  {
+   "id": "p4",
+   "texto": "páginas web, bots y videos",
+   "ini": 33.754,
+   "fin": 35.58
+  },
+  {
+   "id": "p5",
+   "texto": "y ahora también apps y juegos",
+   "ini": 35.63,
+   "fin": 37.465
+  },
+  {
+   "id": "p6",
+   "texto": "si estás interesado",
+   "ini": 37.715,
+   "fin": 39.032
+  },
+  {
+   "id": "p7",
+   "texto": "mándanos un mensaje",
+   "ini": 39.062,
+   "fin": 40.404
+  },
+  {
+   "id": "p8",
+   "texto": "(ningún tiburón lo va a morder)",
+   "ini": 40.604,
+   "fin": 42.525
+  }
+ ]
+}
