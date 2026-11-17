@@ -102,7 +102,13 @@ if (mode === "sheet") {
   const total = Math.ceil(DURATION * FPS);
   const BLOCK = 30, queue = [];
   for (let a = 0, i = 0; a < total; a += BLOCK, i++) queue.push({ i, a, z: Math.min(total, a + BLOCK) });
-  const segDir = path.join(OUT, "segments"); fs.rmSync(segDir, { recursive: true, force: true }); fs.mkdirSync(segDir, { recursive: true });
+  const segDir = path.join(OUT, "segments");
+  const RESUME = rest.includes("--resume");
+  if (!RESUME) fs.rmSync(segDir, { recursive: true, force: true });
+  fs.mkdirSync(segDir, { recursive: true });
+  // Con --resume se saltan los bloques ya completos (mismo número de cuadros que el bloque).
+  const { spawnSync } = await import("node:child_process");
+  const complete = (f, n) => fs.existsSync(f) && parseInt(spawnSync("ffprobe", ["-v", "error", "-count_frames", "-select_streams", "v:0", "-show_entries", "stream=nb_read_frames", "-of", "csv=p=0", f], { encoding: "utf8" }).stdout) === n;
   const t0 = Date.now(); let done = 0;
   const browser = await chromium.launch({ args: ARGS });
   await Promise.all(Array.from({ length: WORKERS }, async () => {
@@ -110,6 +116,7 @@ if (mode === "sheet") {
     while (queue.length) {
       const { i, a, z } = queue.shift();
       const f = path.join(segDir, `b${String(i).padStart(4, "0")}.mp4`);
+      if (RESUME && complete(f, z - a)) { done += z - a; continue; }
       const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-f", "image2pipe", "-framerate", String(FPS), "-c:v", "png", "-i", "-", "-c:v", "libx264", "-preset", "veryfast", "-crf", "14", "-pix_fmt", "yuv420p", "-r", String(FPS), f], { stdio: ["pipe", "inherit", "inherit"] });
       const fin = new Promise((res, rej) => ff.on("exit", (c) => (c === 0 ? res() : rej(new Error("ffmpeg " + c)))));
       for (let k = a; k < z; k++) {
