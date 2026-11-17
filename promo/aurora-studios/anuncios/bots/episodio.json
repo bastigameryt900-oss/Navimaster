@@ -1,0 +1,32 @@
+{
+  "nombre": "bots-eliza",
+  "titulo": "El primer chatbot de la historia",
+  "escenas": { "A": "0", "A2": "h3.ini-0.1", "B": "h4.ini-0.1", "B2": "h6.ini-0.1", "C": "h7.ini-0.1", "D": "h11.ini-0.1" },
+  "fin_gancho": "p1.ini-0.2",
+  "cierre": [
+    { "de": "fin_gancho", "a": "p2.ini", "clips": [[1.45, 2.95]] },
+    { "de": "p2.ini", "a": "p5.ini", "clips": [[8.4, 11.5]] },
+    { "de": "p5.ini", "a": "p6.ini", "clips": [[10.9, 11.75]] },
+    { "de": "p6.ini", "a": "fin", "clips": [[50.3, 56.6]] }
+  ],
+  "cierre_subtitulo_top": 1625,
+  "cierre_ocultar": ".hud-wa",
+  "musica": {
+    "bpm": 96,
+    "acordes": [[50, 53, 57], [46, 50, 53], [53, 57, 60], [48, 52, 55]],
+    "raices": [38, 34, 41, 36],
+    "energia": [["h11.ini-0.1", "p1.ini"]],
+    "silencio": []
+  },
+  "sfx": [
+    { "tipo": "hum", "t": "0", "g": 0.12, "args": { "d": 11.0, "f": 60 } },
+    { "tipo": "boom", "t": "h2.ini", "g": 0.3 },
+    { "tipo": "typing", "t": "h3.ini", "g": 0.4, "args": { "d": 1.0, "rate": 9 } },
+    { "tipo": "typing", "t": ["h6.ini", "h6.ini+1.3"], "g": 0.35, "args": { "d": 0.9, "rate": 12 } },
+    { "tipo": "typing", "t": "h7.ini+0.2", "g": 0.25, "args": { "d": 2.0, "rate": 10 } },
+    { "tipo": "door", "t": "h10.ini-0.15", "g": 0.5 },
+    { "tipo": "typing", "t": "h10.ini+0.3", "g": 0.3, "args": { "d": 1.2, "rate": 12 } },
+    { "tipo": "glitch", "t": "h11.ini-0.4", "g": 0.3, "args": { "d": 0.5 } },
+    { "tipo": "pop", "t": ["h11.ini+0.3", "h11.ini+0.7", "h11.ini+1.1", "h11.ini+1.5"], "g": 0.35 }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+ "duracion": 34.739,
+ "lineas": [
+  {
+   "id": "h1",
+   "texto": "Uno de los primeros videojuegos de la historia",
+   "ini": 0.25,
+   "fin": 2.591
+  },
+  {
+   "id": "h2",
+   "texto": "se creó en 1958",
+   "ini": 2.621,
+   "fin": 4.983
+  },
+  {
+   "id": "h3",
+   "texto": "y se jugaba en un osciloscopio.",
+   "ini": 5.013,
+   "fin": 6.82
+  },
+  {
+   "id": "h4",
+   "texto": "Se llamaba Tennis for Two",
+   "ini": 7.12,
+   "fin": 8.627
+  },
+  {
+   "id": "h5",
+   "texto": "y lo hizo un físico",
+   "ini": 8.657,
+   "fin": 9.913
+  },
+  {
+   "id": "h6",
+   "texto": "para entretener a los visitantes de su laboratorio.",
+   "ini": 9.943,
+   "fin": 12.692
+  },
+  {
+   "id": "h7",
+   "texto": "Hoy hay más de 3.000 millones de jugadores",
+   "ini": 12.992,
+   "fin": 15.411
+  },
+  {
+   "id": "h8",
+   "texto": "y los videojuegos generan más dinero",
+   "ini": 15.441,
+   "fin": 17.615
+  },
+  {
+   "id": "h9",
+   "texto": "que el cine y la música juntos.",
+   "ini": 17.645,
+   "fin": 19.313
+  },
+  {
+   "id": "p1",
+   "texto": "Aurora Studios",
+   "ini": 19.813,
+   "fin": 20.814
+  },
+  {
+   "id": "p2",
+   "texto": "ahora también crea videojuegos",
+   "ini": 20.914,
+   "fin": 22.665
+  },
+  {
+   "id": "p3",
+   "texto": "y apps para celular y computador,",
+   "ini": 22.695,
+   "fin": 24.575
+  },
+  {
+   "id": "p4",
+   "texto": "a tu medida.",
+   "ini": 24.605,
+   "fin": 25.481
+  },
+  {
+   "id": "p5",
+   "texto": "Todo a cotización.",
+   "ini": 25.681,
+   "fin": 26.852
+  },
+  {
+   "id": "p6",
+   "texto": "Si estás interesado,",
+   "ini": 27.102,
+   "fin": 28.419
+  },
+  {
+   "id": "p7",
+   "texto": "mándanos un mensaje.",
+   "ini": 28.449,
+   "fin": 29.79
+  },
+  {
+   "id": "p8",
+   "texto": "(con mejores gráficos que en 1958)",
+   "ini": 29.99,
+   "fin": 33.239
+  }
+ ]
+}

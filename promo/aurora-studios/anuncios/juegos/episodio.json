@@ -1,0 +1,33 @@
+{
+  "nombre": "juegos-1958",
+  "titulo": "Uno de los primeros videojuegos",
+  "escenas": { "A": "0", "B": "h4.ini-0.1", "C": "h7.ini-0.1", "D": "h8.ini-0.1" },
+  "fin_gancho": "p1.ini-0.2",
+  "cierre": [
+    { "de": "fin_gancho", "a": "p2.ini", "clips": [[1.45, 2.95]] },
+    { "de": "p2.ini", "a": "p3.ini", "clips": [[35.3, 37.6]] },
+    { "de": "p3.ini", "a": "p4.ini", "clips": [[26.5, 28.4], [29.5, 31.4], [32.5, 34.4]] },
+    { "de": "p4.ini", "a": "p5.ini", "clips": [[38.5, 40.2]] },
+    { "de": "p5.ini", "a": "p6.ini", "clips": [[24.7, 25.5]] },
+    { "de": "p6.ini", "a": "fin", "clips": [[50.3, 56.6]] }
+  ],
+  "cierre_subtitulo_top": 1625,
+  "cierre_ocultar": ".hud-wa",
+  "musica": {
+    "bpm": 112,
+    "acordes": [[55, 59, 62], [52, 55, 59], [48, 52, 55], [50, 54, 57]],
+    "raices": [43, 40, 36, 38],
+    "energia": [["h7.ini-0.1", "p1.ini"]],
+    "silencio": []
+  },
+  "sfx": [
+    { "tipo": "hum", "t": "0", "g": 0.08, "args": { "d": 12.0, "f": 50 } },
+    { "tipo": "boom", "t": "h2.ini", "g": 0.3 },
+    { "tipo": "bounce", "t": ["0.6", "1.8", "3.0", "4.2", "5.4", "6.6", "7.8", "9.0", "10.2", "11.4"], "g": 0.3 },
+    { "tipo": "crowd", "t": "h6.ini", "g": 0.3, "args": { "d": 2.0 } },
+    { "tipo": "riser", "t": "h7.ini-1.0", "g": 0.6, "args": { "d": 1.0 } },
+    { "tipo": "ticks", "t": "h7.ini", "g": 0.3, "args": { "d": 1.6, "n": 22 } },
+    { "tipo": "pop", "t": ["h8.ini+0.4", "h8.ini+0.8", "h9.ini+0.2"], "g": 0.35 },
+    { "tipo": "ding", "t": "h9.ini+0.9", "g": 0.4 }
+  ]
+}

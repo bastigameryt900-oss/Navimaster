@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<title>Aurora Studios — Uno de los primeros videojuegos</title>
+<link rel="stylesheet" href="../lib/base.css">
+<style>
+#ovYear{top:220px}
+#ovYear b{font-size:260px;color:#7dff9a;text-shadow:0 0 40px rgba(80,255,130,.6)}
+#ovTitle{top:230px}
+#ovTitle b{font-size:150px;color:#7dff9a;text-shadow:0 0 40px rgba(80,255,130,.6)}
+#chipF{top:240px}
+#chipV{top:240px}
+#ovPlayers{top:230px}
+#ovPlayers b{font-size:150px;color:#ffd43b}
+.lbl{position:absolute;font:800 46px/1 Archivo,sans-serif;font-stretch:88%;color:#fff;background:rgba(10,12,20,.75);padding:12px 22px 14px;border-radius:16px;white-space:nowrap;transform:translate(-50%,-130%)}
+#lblG{border:3px solid #ffd43b}
+#lblC{border:3px solid #8ab4ff}
+</style>
+<script type="importmap">{"imports":{"three":"../../tiktok/assets/three.module.min.js"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="vig"></div>
+  <div class="ov big" id="ovYear"><b>1958</b><span>Nueva York, EE.UU.</span></div>
+  <div class="ov big" id="ovTitle"><b>Tennis for Two</b></div>
+  <div class="ov chip" id="chipF">William Higinbotham · físico</div>
+  <div class="ov chip" id="chipV">Día de visitas del laboratorio</div>
+  <div class="ov big" id="ovPlayers"><b id="plN">0</b><span>jugadores en el mundo</span></div>
+  <div class="ov lbl" id="lblG">Videojuegos</div>
+  <div class="ov lbl" id="lblC">Cine + Música</div>
+  <div id="cap"><span id="capT"></span></div>
+  <div id="flash"></div>
+</div>
+<script type="module">
+import { THREE, RoundedBoxGeometry, W, H, $, clamp, lerp, seg, eio, eo, ei, back, V3, rng, L, CUT, END, post, skyDome, envFrom, glowSprite, GLOW, canvasTex, makePerson, project, placeOv, start } from "../lib/base.js";
+
+// ---------- pelota de Tennis for Two (determinista) ----------
+const PER = 1.2;
+function ball(t) {
+  const k = Math.floor(t / PER), u = (t % PER) / PER, dir = k % 2 ? -1 : 1;
+  const x = dir * lerp(-0.85, 0.85, u);
+  let y;
+  if (u < 0.5) { const u0 = 0.2115; y = 0.62 - 7.44 * (u - u0) ** 2; } else { y = 0.42 - 4.1 * (u - 0.82) ** 2; }
+  return [x, Math.max(0, y)];
+}
+function drawScope(x, t) {
+  const S = 1024;
+  x.fillStyle = "#061a0c"; x.fillRect(0, 0, S, S);
+  x.strokeStyle = "rgba(80,200,120,.12)"; x.lineWidth = 2;
+  for (let i = 1; i < 10; i++) { x.beginPath(); x.moveTo(i * S / 10, 0); x.lineTo(i * S / 10, S); x.stroke(); x.beginPath(); x.moveTo(0, i * S / 10); x.lineTo(S, i * S / 10); x.stroke(); }
+  const gy = 700, px = (v) => 512 + v * 400, py = (v) => gy - v * 480;
+  x.shadowColor = "#5dff8a"; x.shadowBlur = 24; x.strokeStyle = "#a6ffbe"; x.lineWidth = 9; x.lineCap = "round";
+  x.beginPath(); x.moveTo(px(-1.05), gy); x.lineTo(px(1.05), gy); x.stroke();
+  x.beginPath(); x.moveTo(512, gy); x.lineTo(512, gy - 130); x.stroke();
+  for (let i = 18; i >= 0; i--) { const [bx, by] = ball(t - i * 0.018); x.globalAlpha = 1 - i / 19; x.fillStyle = "#c8ffd6"; x.beginPath(); x.arc(px(bx), py(by), i ? 9 : 15, 0, 7); x.fill(); }
+  x.globalAlpha = 1; x.shadowBlur = 0;
+  const g = x.createRadialGradient(512, 512, 200, 512, 512, 560); g.addColorStop(0, "rgba(0,0,0,0)"); g.addColorStop(1, "rgba(0,0,0,.6)"); x.fillStyle = g; x.fillRect(0, 0, S, S);
+}
+
+// =====================================================================
+// Laboratorio de 1958 (A y B)
+// =====================================================================
+const LAB = (() => {
+  const s = new THREE.Scene();
+  s.background = new THREE.Color("#c9c7b4");
+  s.environment = envFrom("#ffffff", "#d8d4c0", "#6a6658");
+  s.fog = new THREE.Fog("#c9c7b4", 12, 34);
+  s.add(new THREE.HemisphereLight("#fffbea", "#6a6658", 1.3));
+  const key = new THREE.DirectionalLight("#fff4dd", 2.0); key.position.set(-3, 9, 7); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -10, right: 10, top: 10, bottom: -10, near: 1, far: 40 }); s.add(key);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ color: "#8c8a78", roughness: 0.85 })); floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; s.add(floor);
+  const wall = new THREE.Mesh(new THREE.PlaneGeometry(40, 9), new THREE.MeshStandardMaterial({ color: "#9fb3a3", roughness: 0.95 })); wall.position.set(0, 4.5, -4); s.add(wall);
+  const strip = new THREE.Mesh(new THREE.PlaneGeometry(40, 1.2), new THREE.MeshStandardMaterial({ color: "#6f8576" })); strip.position.set(0, 0.6, -3.98); s.add(strip);
+  // mesa
+  const table = new THREE.Mesh(new RoundedBoxGeometry(3.2, 0.1, 1.4, 2, 0.03), new THREE.MeshStandardMaterial({ color: "#6b4a30", roughness: 0.6 })); table.position.set(0, 0.85, -1.2); table.castShadow = table.receiveShadow = true; s.add(table);
+  const legM = new THREE.MeshStandardMaterial({ color: "#3a3a3a", metalness: 0.6, roughness: 0.4 });
+  for (const [lx, lz] of [[-1.5, -1.8], [1.5, -1.8], [-1.5, -0.6], [1.5, -0.6]]) { const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.85), legM); leg.position.set(lx, 0.42, lz); s.add(leg); }
+  // osciloscopio
+  const osc = new THREE.Group(); osc.position.set(0, 0.9, -1.45); s.add(osc);
+  const body = new THREE.Mesh(new RoundedBoxGeometry(1.1, 0.95, 1.05, 3, 0.05), new THREE.MeshStandardMaterial({ color: "#4e5a52", roughness: 0.5, metalness: 0.4 })); body.position.y = 0.48; body.castShadow = true; osc.add(body);
+  const bezel = new THREE.Mesh(new THREE.TorusGeometry(0.31, 0.03, 16, 48), new THREE.MeshStandardMaterial({ color: "#8a9096", metalness: 0.85, roughness: 0.3 })); bezel.position.set(0, 0.6, 0.548); osc.add(bezel);
+  const sc = canvasTex(1024, 1024);
+  const scr = new THREE.Mesh(new THREE.CircleGeometry(0.3, 64), new THREE.MeshBasicMaterial({ map: sc.tex, color: new THREE.Color(1.35, 1.35, 1.35) })); scr.position.set(0, 0.6, 0.546); osc.add(scr);
+  const glowL = new THREE.PointLight("#5dff8a", 3, 2.5, 1.5); glowL.position.set(0, 0.6, 0.9); osc.add(glowL);
+  const knobM = new THREE.MeshStandardMaterial({ color: "#1b1b1b", roughness: 0.4 });
+  for (let i = 0; i < 4; i++) { const kn = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.05, 0.05, 20), knobM); kn.rotation.x = Math.PI / 2; kn.position.set(-0.36 + i * 0.24, 0.17, 0.54); osc.add(kn); }
+  const plate = new THREE.Mesh(new THREE.PlaneGeometry(0.5, 0.07), new THREE.MeshStandardMaterial({ color: "#c9b27a", metalness: 0.8, roughness: 0.3 })); plate.position.set(0, 0.88, 0.531); osc.add(plate);
+  // computador analógico al lado
+  const comp = new THREE.Mesh(new RoundedBoxGeometry(1.1, 0.7, 0.9, 2, 0.04), new THREE.MeshStandardMaterial({ color: "#7a6a52", roughness: 0.6 })); comp.position.set(-1.0, 1.25, -1.5); comp.castShadow = true; s.add(comp);
+  const R = rng(19);
+  for (let i = 0; i < 18; i++) { const j = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.03, 10), new THREE.MeshStandardMaterial({ color: ["#c0392b", "#f1c40f", "#ecf0f1"][i % 3] })); j.rotation.x = Math.PI / 2; j.position.set(-1.4 + (i % 6) * 0.16, 1.15 + Math.floor(i / 6) * 0.14, -1.04); s.add(j); }
+  for (let i = 0; i < 6; i++) { const c = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([V3(-1.4 + i * 0.15, 1.2, -1.05), V3(-1.2 + i * 0.12, 1.0 - R() * 0.2, -0.95), V3(-0.6 + i * 0.05, 1.0, -1.0), V3(-0.3, 1.2 + i * 0.03, -1.1)]), 20, 0.012, 6), new THREE.MeshStandardMaterial({ color: ["#c0392b", "#2c3e50", "#f1c40f"][i % 3] })); s.add(c); }
+  // controles
+  const ctrls = [];
+  [-0.95, 0.95].forEach((cx) => { const g = new THREE.Group(); g.position.set(cx, 0.9, -0.75);
+    const b = new THREE.Mesh(new RoundedBoxGeometry(0.28, 0.1, 0.2, 2, 0.02), new THREE.MeshStandardMaterial({ color: "#b8bcc2", metalness: 0.7, roughness: 0.3 })); b.position.y = 0.05; b.castShadow = true; g.add(b);
+    const kn = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.045, 0.05, 16), knobM); kn.position.set(-0.05, 0.12, 0); g.add(kn);
+    const bt = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.03, 12), new THREE.MeshStandardMaterial({ color: "#c0392b" })); bt.position.set(0.07, 0.11, 0); g.add(bt);
+    s.add(g); ctrls.push(g); });
+  // jugadores, físico y visitantes
+  const p1 = makePerson("#2c6fb7", "#f1c27d"); p1.position.set(-1.0, 0, 0.05); p1.rotation.y = Math.PI; s.add(p1);
+  const p2 = makePerson("#d35400", "#c68642"); p2.position.set(1.0, 0, 0.05); p2.rotation.y = Math.PI; s.add(p2);
+  const phys = makePerson("#f4f4f2", "#f1c27d"); phys.position.set(2.2, 0, -0.9); phys.rotation.y = -1.1; s.add(phys);
+  const gl = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.012, 8, 20), new THREE.MeshStandardMaterial({ color: "#111" }));
+  [-0.09, 0.09].forEach((gx) => { const g2 = gl.clone(); g2.position.set(gx, 1.58, 0.24); phys.add(g2); });
+  const hr = new THREE.Mesh(new THREE.SphereGeometry(0.27, 20, 14, 0, Math.PI * 2, 0, Math.PI / 2.6), new THREE.MeshStandardMaterial({ color: "#4a3b2b" })); hr.position.y = 1.6; phys.add(hr);
+  const visitors = [];
+  const cols = ["#8e44ad", "#16a085", "#c0392b", "#2980b9", "#f39c12", "#7f8c8d", "#27ae60"];
+  for (let i = 0; i < 7; i++) { const v = makePerson(cols[i], ["#f1c27d", "#c68642", "#e0ac69", "#8d5524"][i % 4]); v.position.set(3.2 + i * 0.75, 0, 0.4 + i * 0.35); v.rotation.y = -2.3; s.add(v); visitors.push(v); }
+  const ropeM = new THREE.MeshStandardMaterial({ color: "#c9a227", metalness: 0.8, roughness: 0.3 });
+  for (let i = 0; i < 5; i++) { const post = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.06, 1.0, 12), ropeM); post.position.set(2.7 + i * 1.3, 0.5, 1.1 + i * 0.55); s.add(post); }
+  const rope = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3([V3(2.7, 0.9, 1.1), V3(4.0, 0.75, 1.65), V3(5.3, 0.9, 2.2), V3(6.6, 0.75, 2.75), V3(7.9, 0.9, 3.3)]), 40, 0.025, 6), new THREE.MeshStandardMaterial({ color: "#8b1e1e" })); s.add(rope);
+  let lastT = -1;
+  function tick(t) {
+    const q = Math.round(t * 30) / 30; if (q !== lastT) { drawScope(sc.x, q); sc.tex.needsUpdate = true; lastT = q; }
+    const [bx] = ball(t);
+    ctrls[0].children[1].rotation.y = bx * 2; ctrls[1].children[1].rotation.y = -bx * 2;
+    p1.userData.head.rotation.y = 0.15 + bx * 0.15; p2.userData.head.rotation.y = -0.15 + bx * 0.15;
+    visitors.forEach((v, i) => (v.position.y = Math.max(0, Math.sin(t * 3 + i)) * 0.03));
+  }
+  return { s, tick, osc, phys, p1, p2 };
+})();
+const camL = new THREE.PerspectiveCamera(40, W / H, 0.05, 100);
+
+const A = { update(t, dur) {
+  LAB.tick(t);
+  const k = eio(seg(t, 0.4, L.h3.ini + 0.2));
+  // empieza pegado a la pantalla y se aleja
+  camL.fov = lerp(22, 40, k); camL.updateProjectionMatrix();
+  camL.position.set(lerp(0.02, 1.0, k), lerp(1.5, 2.4, k), lerp(0.25, 2.6, k));
+  camL.lookAt(0, lerp(1.5, 1.25, k), -1.0);
+  LAB.p1.visible = LAB.p2.visible = k > 0.5;
+  $("#ovYear").style.opacity = seg(t, L.h2.ini, L.h2.ini + 0.2) * (1 - seg(t, L.h3.ini + 0.6, L.h3.ini + 0.9));
+  $("#ovYear").style.transform = `scale(${lerp(1.3, 1, eo(seg(t, L.h2.ini, L.h2.ini + 0.4)))})`;
+  return { s: LAB.s, cam: camL };
+} };
+const B = { update(t, dur, abs) {
+  LAB.tick(abs);
+  LAB.p1.visible = LAB.p2.visible = true;
+  const t5 = L.h5.ini - CUT.B, t6 = L.h6.ini - CUT.B;
+  const k = eio(seg(t, t5 - 0.3, t6 + 0.6));
+  camL.fov = 44; camL.updateProjectionMatrix();
+  camL.position.set(lerp(1.7, 2.8, k), lerp(2.7, 3.7, k), lerp(3.8, 7.4, k));
+  camL.lookAt(lerp(0.4, 2.8, k), lerp(1.15, 0.9, k), lerp(-1.0, 0.6, k));
+  LAB.phys.rotation.y = -1.1 + Math.sin(abs * 1.5) * 0.1;
+  $("#ovTitle").style.opacity = seg(t, 0.05, 0.25) * (1 - seg(t, t5 - 0.2, t5));
+  $("#chipF").style.opacity = seg(t, t5, t5 + 0.2) * (1 - seg(t, t6 - 0.15, t6));
+  $("#chipV").style.opacity = seg(t, t6 + 0.1, t6 + 0.3);
+  return { s: LAB.s, cam: camL };
+} };
+
+// =====================================================================
+// C — 3.000 millones de jugadores: lluvia de controles
+// =====================================================================
+const C = (() => {
+  const s = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(45, W / H, 0.1, 200);
+  s.add(skyDome("#1b0f3a", "#4b1f6b", "#140a26", 80));
+  s.environment = envFrom("#ffffff", "#b58ad6", "#2a1840");
+  s.add(new THREE.HemisphereLight("#f3e6ff", "#2a1840", 1.4));
+  const key = new THREE.DirectionalLight("#ffffff", 2.4); key.position.set(3, 6, 6); s.add(key);
+  const R = rng(31), pads = [];
+  const COLS = ["#ffd43b", "#ff5a5f", "#7ddfb0", "#8ab4ff", "#ff7ab6", "#c8f04a", "#ff9f45", "#fdfcf9"];
+  function gamepad(col) {
+    const g = new THREE.Group();
+    const m = new THREE.MeshStandardMaterial({ color: col, roughness: 0.35, metalness: 0.05 });
+    const b = new THREE.Mesh(new RoundedBoxGeometry(1.3, 0.55, 0.32, 3, 0.15), m); g.add(b);
+    [-0.52, 0.52].forEach((x) => { const gr = new THREE.Mesh(new THREE.CapsuleGeometry(0.2, 0.35, 4, 12), m); gr.position.set(x, -0.28, 0); gr.rotation.z = x > 0 ? 0.35 : -0.35; g.add(gr); });
+    const dk = new THREE.MeshStandardMaterial({ color: "#1b1b22", roughness: 0.4 });
+    const dp1 = new THREE.Mesh(new THREE.BoxGeometry(0.28, 0.08, 0.06), dk); dp1.position.set(-0.36, 0.05, 0.17); g.add(dp1);
+    const dp2 = dp1.clone(); dp2.rotation.z = Math.PI / 2; g.add(dp2);
+    ["#ff5a5f", "#7ddfb0", "#8ab4ff", "#ffd43b"].forEach((c, i) => { const bt = new THREE.Mesh(new THREE.SphereGeometry(0.055, 12, 8), new THREE.MeshStandardMaterial({ color: c, roughness: 0.3 })); const a = (i / 4) * Math.PI * 2; bt.position.set(0.36 + Math.cos(a) * 0.11, 0.05 + Math.sin(a) * 0.11, 0.17); g.add(bt); });
+    return g;
+  }
+  for (let i = 0; i < 70; i++) { const g = gamepad(COLS[i % COLS.length]); s.add(g); pads.push({ g, x: (R() - 0.5) * 9, z: -R() * 9, d: R() * 2.2, sp: 4 + R() * 3, rx: R() * 6, ry: R() * 6, vr: (R() - 0.5) * 4 }); }
+  return { update(t, dur) {
+    pads.forEach((p) => { const lt = t - p.d * 0.6; const y = 9 - lt * p.sp; p.g.visible = lt > 0; p.g.position.set(p.x, Math.max(-6, y), p.z); p.g.rotation.set(p.rx + lt * p.vr, p.ry + lt * p.vr * 0.7, 0); });
+    cam.position.set(0, 0.5, 10); cam.lookAt(0, 0.3, -2);
+    const n = Math.round(eo(seg(t, 0.15, 1.7)) * 3000) * 1e6;
+    $("#plN").textContent = "+" + n.toLocaleString("es-CL");
+    $("#ovPlayers").style.opacity = seg(t, 0.05, 0.25);
+    $("#ovPlayers").style.transform = `scale(${lerp(0.85, 1, eo(seg(t, 0.05, 0.4)))})`;
+    return { s, cam };
+  } };
+})();
+
+// =====================================================================
+// D — Videojuegos vs cine + música (barras)
+// =====================================================================
+const D = (() => {
+  const s = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(40, W / H, 0.1, 200);
+  s.add(skyDome("#0f1530", "#26305e", "#0b0f20", 80));
+  s.environment = envFrom("#ffffff", "#8a98d6", "#1b2040");
+  s.add(new THREE.HemisphereLight("#e8ecff", "#1b2040", 1.3));
+  const key = new THREE.DirectionalLight("#ffffff", 2.6); key.position.set(-4, 8, 6); key.castShadow = true; key.shadow.mapSize.set(2048, 2048); s.add(key);
+  const base = new THREE.Mesh(new RoundedBoxGeometry(6, 0.3, 3.4, 3, 0.1), new THREE.MeshStandardMaterial({ color: "#2b3466", roughness: 0.5 })); base.position.y = -0.15; base.receiveShadow = true; s.add(base);
+  function bar(color) { const m = new THREE.Mesh(new RoundedBoxGeometry(1.5, 1, 1.5, 3, 0.08), new THREE.MeshStandardMaterial({ color, roughness: 0.35, metalness: 0.1 })); m.castShadow = true; s.add(m); return m; }
+  const bG = bar("#ffd43b"), bC = bar("#8ab4ff"), bM = bar("#ff7ab6");
+  const HG = 6.0, HC = 1.1, HM = 0.95;
+  const R = rng(5), conf = [];
+  for (let i = 0; i < 50; i++) { const c = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.06, 0.02), new THREE.MeshStandardMaterial({ color: ["#ffd43b", "#ff5a5f", "#7ddfb0", "#8ab4ff"][i % 4] })); s.add(c); conf.push({ c, x: (R() - 0.5) * 5, z: (R() - 0.5) * 3, d: R(), sp: 1.5 + R() * 1.5, r: R() * 6 }); }
+  return { update(t, dur, abs) {
+    const t9 = L.h9.ini - CUT.D;
+    const g = eo(seg(t, 0.2, 1.6)), c = eo(seg(t, t9, t9 + 0.9));
+    const hg = Math.max(0.01, HG * g), hc = Math.max(0.01, HC * c), hm = Math.max(0.01, HM * c);
+    bG.scale.y = hg; bG.position.set(-1.25, hg / 2, 0);
+    bC.scale.y = hc; bC.position.set(1.25, hc / 2, 0);
+    bM.scale.y = hm; bM.position.set(1.25, hc + hm / 2, 0);
+    const k = eio(seg(t, 0, dur));
+    cam.position.set(lerp(3.5, 1.5, k), lerp(4.5, 3.8, k), lerp(12.5, 11.0, k)); cam.lookAt(0, 2.6, 0);
+    const pg = project(V3(-1.25, hg + 0.1, 0), cam), pc = project(V3(1.25, hc + hm + 0.1, 0), cam);
+    placeOv($("#lblG"), pg, seg(t, 0.3, 0.6)); placeOv($("#lblC"), pc, seg(t, t9 + 0.2, t9 + 0.5));
+    const tc = t9 + 0.9;
+    conf.forEach((o) => { const lt = t - tc - o.d * 0.4; o.c.visible = lt > 0; o.c.position.set(o.x, 8 - lt * o.sp, o.z); o.c.rotation.set(o.r + lt * 5, o.r + lt * 3, 0); });
+    return { s, cam };
+  } };
+})();
+
+await start({ A, B, C, D }, ["#ovYear", "#ovTitle", "#chipF", "#chipV", "#ovPlayers", "#lblG", "#lblC"]);
+</script>
+</body>
+</html>

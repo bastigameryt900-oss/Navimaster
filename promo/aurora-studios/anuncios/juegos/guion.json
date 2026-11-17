@@ -1,0 +1,22 @@
+{
+  "_fuentes": "Tennis for Two: creado en 1958 por el físico William Higinbotham en el Laboratorio Nacional de Brookhaven (Nueva York) para el día de visitas; se mostraba en un osciloscopio. Newzoo (2023): unos 3.300 millones de jugadores en el mundo. Ingresos 2023: videojuegos ~184 mil millones USD vs. taquilla de cine ~34 mil millones + música grabada ~29 mil millones.",
+  "lineas": [
+    {"id": "h1", "texto": "Uno de los primeros videojuegos de la historia", "pausa": 0.03},
+    {"id": "h2", "texto": "se creó en 1958", "voz": "se creó en mil novecientos cincuenta y ocho", "pausa": 0.03},
+    {"id": "h3", "texto": "y se jugaba en un osciloscopio.", "pausa": 0.3},
+    {"id": "h4", "texto": "Se llamaba Tennis for Two", "voz": "Se llamaba Tenis for Tu,", "pausa": 0.03},
+    {"id": "h5", "texto": "y lo hizo un físico", "pausa": 0.03},
+    {"id": "h6", "texto": "para entretener a los visitantes de su laboratorio.", "pausa": 0.3},
+    {"id": "h7", "texto": "Hoy hay más de 3.000 millones de jugadores", "voz": "Hoy hay más de tres mil millones de jugadores", "pausa": 0.03},
+    {"id": "h8", "texto": "y los videojuegos generan más dinero", "pausa": 0.03},
+    {"id": "h9", "texto": "que el cine y la música juntos.", "pausa": 0.5},
+    {"id": "p1", "texto": "Aurora Studios", "voz": "Aurora Estudios.", "pausa": 0.1},
+    {"id": "p2", "texto": "ahora también crea videojuegos", "pausa": 0.03},
+    {"id": "p3", "texto": "y apps para celular y computador,", "pausa": 0.03},
+    {"id": "p4", "texto": "a tu medida.", "pausa": 0.2},
+    {"id": "p5", "texto": "Todo a cotización.", "pausa": 0.25},
+    {"id": "p6", "texto": "Si estás interesado,", "pausa": 0.03},
+    {"id": "p7", "texto": "mándanos un mensaje.", "pausa": 0.2},
+    {"id": "p8", "texto": "(con mejores gráficos que en 1958)", "voz": "Con mejores gráficos que en mil novecientos cincuenta y ocho.", "pausa": 1.5}
+  ]
+}

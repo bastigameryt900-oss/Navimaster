@@ -1,0 +1,119 @@
+{
+ "duracion": 35.614,
+ "lineas": [
+  {
+   "id": "h1",
+   "texto": "El primer chatbot de la historia",
+   "ini": 0.25,
+   "fin": 2.023
+  },
+  {
+   "id": "h2",
+   "texto": "nació en 1966",
+   "ini": 2.053,
+   "fin": 4.278
+  },
+  {
+   "id": "h3",
+   "texto": "y se llamaba ELIZA.",
+   "ini": 4.308,
+   "fin": 5.568
+  },
+  {
+   "id": "h4",
+   "texto": "Vivía en un computador",
+   "ini": 5.868,
+   "fin": 7.288
+  },
+  {
+   "id": "h5",
+   "texto": "del tamaño de una habitación",
+   "ini": 7.318,
+   "fin": 8.954
+  },
+  {
+   "id": "h6",
+   "texto": "y conversaba como un psicoterapeuta.",
+   "ini": 8.984,
+   "fin": 10.991
+  },
+  {
+   "id": "h7",
+   "texto": "Era tan convincente",
+   "ini": 11.291,
+   "fin": 12.664
+  },
+  {
+   "id": "h8",
+   "texto": "que la secretaria de su creador",
+   "ini": 12.694,
+   "fin": 14.367
+  },
+  {
+   "id": "h9",
+   "texto": "le pidió que saliera de la sala",
+   "ini": 14.397,
+   "fin": 16.096
+  },
+  {
+   "id": "h10",
+   "texto": "para hablar a solas con ella.",
+   "ini": 16.126,
+   "fin": 17.735
+  },
+  {
+   "id": "h11",
+   "texto": "Hoy, un bot puede hacer mucho más.",
+   "ini": 18.085,
+   "fin": 19.945
+  },
+  {
+   "id": "p1",
+   "texto": "Aurora Studios",
+   "ini": 20.445,
+   "fin": 21.446
+  },
+  {
+   "id": "p2",
+   "texto": "crea bots de Discord a medida:",
+   "ini": 21.546,
+   "fin": 23.275
+  },
+  {
+   "id": "p3",
+   "texto": "moderación, roles y bienvenidas,",
+   "ini": 23.375,
+   "fin": 25.327
+  },
+  {
+   "id": "p4",
+   "texto": "funcionando las 24 horas,",
+   "ini": 25.357,
+   "fin": 27.373
+  },
+  {
+   "id": "p5",
+   "texto": "desde $40.000.",
+   "ini": 27.403,
+   "fin": 28.966
+  },
+  {
+   "id": "p6",
+   "texto": "Si estás interesado,",
+   "ini": 29.216,
+   "fin": 30.533
+  },
+  {
+   "id": "p7",
+   "texto": "mándanos un mensaje.",
+   "ini": 30.563,
+   "fin": 31.904
+  },
+  {
+   "id": "p8",
+   "texto": "(te responde una persona, no ELIZA)",
+   "ini": 32.104,
+   "fin": 34.114
+  }
+ ]
+}

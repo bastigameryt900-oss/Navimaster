@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<title>Aurora Studios — 50 milisegundos</title>
+<link rel="stylesheet" href="../lib/base.css">
+<style>
+#ovMs{top:260px}
+#ovMs b{color:#ffd43b}
+#ovBars{left:80px;right:80px;top:250px;color:#fff;font:700 38px/1 Inter}
+#ovBars .r{margin-bottom:34px}
+#ovBars .r div{display:flex;justify-content:space-between;margin-bottom:14px}
+#ovBars .r div em{font-style:normal;color:#ffd43b}
+#ovBars .bar{height:34px;border-radius:17px;background:rgba(255,255,255,.15);overflow:hidden}
+#ovBars .bar i{display:block;height:100%;border-radius:17px;background:#9fb3c8;width:0}
+#ovBars .r.y .bar i{background:#ffd43b}
+#chipA{top:240px}
+#chipB{top:330px;border-color:#7ddfb0;color:#c9ffe6}
+#ovSec{top:230px}
+#ovSec b{font-size:230px;color:#15141b;text-shadow:none}
+#ovSec span{color:#55524b;text-shadow:none}
+#ovPct{top:120px;left:170px;right:170px;background:rgba(14,16,28,.82);border-radius:40px;padding:26px 0 30px}
+#ovPct b{color:#ff5a5f}
+#ovOk{left:50%;top:1320px;transform:translateX(-50%)}
+#ovOk em{font-style:normal;color:#25d366}
+</style>
+<script type="importmap">{"imports":{"three":"../../tiktok/assets/three.module.min.js"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="vig"></div>
+  <div class="ov big" id="ovMs"><b id="msN">0 ms</b><span>para decidir</span></div>
+  <div class="ov" id="ovBars">
+    <div class="r"><div><span>Un parpadeo</span><em style="color:#c9d6e3">100–400 ms</em></div><div class="bar"><i id="barA"></i></div></div>
+    <div class="r y"><div><span>Primera impresión</span><em>50 ms</em></div><div class="bar"><i id="barB"></i></div></div>
+  </div>
+  <div class="ov chip" id="chipA">Estudio · Canadá, 2006</div>
+  <div class="ov chip" id="chipB">✓ Confirmado después</div>
+  <div class="ov big" id="ovSec"><b id="secN">0,0 s</b><span>cargando…</span></div>
+  <div class="ov big" id="ovPct"><b id="pctN">0 %</b><span>se van sin verla</span></div>
+  <div class="ov pill" id="ovOk"><em>✓</em> Primera impresión</div>
+  <div id="cap"><span id="capT"></span></div>
+  <div id="flash"></div>
+</div>
+<script type="module">
+import { THREE, RoundedBoxGeometry, W, H, $, clamp, lerp, seg, eio, eo, ei, back, V3, rng, L, CUT, END, post, skyDome, envFrom, glowSprite, GLOW, canvasTex, makePhone, makePerson, project, start } from "../lib/base.js";
+
+// ---------- sitio web de ejemplo (para laptop y celular) ----------
+function drawSite(x, w, h, mobile) {
+  x.fillStyle = "#fdfcf9"; x.fillRect(0, 0, w, h);
+  const s = w / (mobile ? 600 : 1280);
+  x.save(); x.scale(s, s);
+  const W0 = mobile ? 600 : 1280;
+  // barra
+  x.fillStyle = "#15141b"; x.beginPath(); x.roundRect(40, 34, 170, 40, 10); x.fill();
+  x.fillStyle = "#ffd43b"; x.beginPath(); x.arc(70, 54, 12, Math.PI, 0); x.fill();
+  if (!mobile) { x.fillStyle = "#cfcbc2"; [0, 1, 2].forEach((i) => { x.beginPath(); x.roundRect(760 + i * 110, 46, 84, 14, 7); x.fill(); }); }
+  x.fillStyle = "#25d366"; x.beginPath(); x.roundRect(W0 - 200, 30, 160, 48, 24); x.fill();
+  // hero
+  const hx = 40, hy = mobile ? 140 : 150;
+  x.fillStyle = "#15141b"; x.font = `800 ${mobile ? 84 : 92}px Archivo`;
+  x.fillText("Tu negocio,", hx, hy + 80); x.fillStyle = "#e8590c"; x.fillText("en línea.", hx, hy + 172);
+  x.fillStyle = "#8a877f"; x.font = "600 26px Inter";
+  x.fillText("Página rápida, moderna y lista para celular.", hx, hy + 230);
+  x.fillStyle = "#25d366"; x.beginPath(); x.roundRect(hx, hy + 262, 260, 70, 35); x.fill();
+  x.fillStyle = "#fff"; x.font = "700 28px Inter"; x.fillText("Escríbenos", hx + 60, hy + 307);
+  // imagen con sol
+  const ix = mobile ? 40 : 720, iy = mobile ? hy + 370 : 140, iw = mobile ? 520 : 520, ih = mobile ? 340 : 400;
+  const g = x.createLinearGradient(0, iy, 0, iy + ih); g.addColorStop(0, "#2a2833"); g.addColorStop(1, "#141319");
+  x.fillStyle = g; x.beginPath(); x.roundRect(ix, iy, iw, ih, 28); x.fill();
+  x.save(); x.beginPath(); x.roundRect(ix, iy, iw, ih, 28); x.clip();
+  const sg = x.createRadialGradient(ix + iw / 2, iy + ih * 0.75, 10, ix + iw / 2, iy + ih * 0.75, iw * 0.35);
+  sg.addColorStop(0, "#ffe270"); sg.addColorStop(0.6, "#ffd43b"); sg.addColorStop(1, "#ff9f45");
+  x.fillStyle = sg; x.beginPath(); x.arc(ix + iw / 2, iy + ih * 0.95, iw * 0.33, 0, 7); x.fill();
+  x.restore();
+  // tarjetas
+  const cy = mobile ? iy + ih + 40 : 600;
+  const cols = ["#ffd43b", "#7ddfb0", "#ff9f45"];
+  for (let i = 0; i < 3; i++) {
+    const cw = mobile ? 520 : 380, cx = mobile ? 40 : 40 + i * 410, yy = mobile ? cy + i * 150 : cy;
+    x.fillStyle = "#efece4"; x.beginPath(); x.roundRect(cx, yy, cw, 130, 22); x.fill();
+    x.fillStyle = cols[i]; x.beginPath(); x.roundRect(cx + 24, yy + 24, 60, 60, 16); x.fill();
+    x.fillStyle = "#cfcbc2"; x.beginPath(); x.roundRect(cx + 110, yy + 36, cw - 150, 16, 8); x.fill(); x.beginPath(); x.roundRect(cx + 110, yy + 70, (cw - 150) * 0.6, 14, 7); x.fill();
+  }
+  x.restore();
+}
+function drawLoading(x, w, h, t) {
+  x.fillStyle = "#f4f3ef"; x.fillRect(0, 0, w, h);
+  x.fillStyle = "#e4e2dc";
+  [[40, 120, 520, 60], [40, 220, 380, 40], [40, 300, 520, 330], [40, 680, 520, 120], [40, 830, 520, 120]].forEach(([a, b, c, d]) => { x.beginPath(); x.roundRect(a, b, c, d, 18); x.fill(); });
+  // brillo de "skeleton"
+  const gx = ((t * 500) % (w + 400)) - 200;
+  const g = x.createLinearGradient(gx - 120, 0, gx + 120, 0); g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(0.5, "rgba(255,255,255,.7)"); g.addColorStop(1, "rgba(255,255,255,0)");
+  x.fillStyle = g; x.fillRect(0, 100, w, 900);
+  // spinner
+  x.strokeStyle = "#d0cdc4"; x.lineWidth = 14; x.beginPath(); x.arc(w / 2, 1080, 46, 0, 7); x.stroke();
+  x.strokeStyle = "#4f9dde"; x.lineCap = "round"; x.beginPath(); x.arc(w / 2, 1080, 46, t * 7, t * 7 + 1.6); x.stroke();
+  // barra superior
+  x.fillStyle = "#d9e6f2"; x.fillRect(0, 0, w, 10);
+  x.fillStyle = "#4f9dde"; x.fillRect(0, 0, w * Math.min(0.92, 0.25 + t * 0.2), 10);
+}
+
+// =====================================================================
+// A — Escritorio: alguien mira una página web; el tiempo se congela en 50 ms
+// =====================================================================
+const A = (() => {
+  const s = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(42, W / H, 0.05, 200);
+  s.background = new THREE.Color("#1a1922");
+  s.environment = envFrom("#3a3a55", "#2a2733", "#15141b");
+  s.fog = new THREE.Fog("#1a1922", 8, 22);
+  s.add(new THREE.HemisphereLight("#d6dcff", "#3b2f25", 0.9));
+  const key = new THREE.DirectionalLight("#ffe2b8", 2.2); key.position.set(-3, 5, 3); key.castShadow = true; key.shadow.mapSize.set(2048, 2048); s.add(key);
+  const lamp = new THREE.PointLight("#ffcf8a", 18, 8, 1.6); lamp.position.set(1.6, 1.9, -0.4); s.add(lamp);
+  const wall = new THREE.Mesh(new THREE.PlaneGeometry(30, 12), new THREE.MeshStandardMaterial({ color: "#2b2733", roughness: 1 })); wall.position.set(0, 3, -3); s.add(wall);
+  // ventana con sol
+  const win = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 1.8), new THREE.MeshBasicMaterial({ color: new THREE.Color("#ffcf8a").multiplyScalar(1.3) })); win.position.set(-1.6, 2.5, -2.98); s.add(win);
+  const desk = new THREE.Mesh(new RoundedBoxGeometry(5, 0.12, 2.4, 4, 0.04), new THREE.MeshStandardMaterial({ color: "#8a5a3c", roughness: 0.6 })); desk.position.y = 0.75; desk.receiveShadow = true; s.add(desk);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshStandardMaterial({ color: "#221f28", roughness: 1 })); floor.rotation.x = -Math.PI / 2; s.add(floor);
+  // laptop
+  const lap = new THREE.Group(); lap.position.set(0, 0.81, -0.35);
+  const alu = new THREE.MeshStandardMaterial({ color: "#c9ccd3", metalness: 0.8, roughness: 0.3 });
+  const base = new THREE.Mesh(new RoundedBoxGeometry(1.6, 0.04, 1.05, 3, 0.02), alu); base.castShadow = true; lap.add(base);
+  const lid = new THREE.Group(); lid.position.set(0, 0.02, -0.52); lid.rotation.x = -0.18; lap.add(lid);
+  const lidM = new THREE.Mesh(new RoundedBoxGeometry(1.6, 1.04, 0.03, 3, 0.02), alu); lidM.position.y = 0.52; lidM.castShadow = true; lid.add(lidM);
+  const scr = canvasTex(1280, 800); drawSite(scr.x, 1280, 800, false); scr.tex.needsUpdate = true;
+  const screen = new THREE.Mesh(new THREE.PlaneGeometry(1.5, 0.94), new THREE.MeshBasicMaterial({ map: scr.tex })); screen.position.set(0, 0.52, 0.017); lid.add(screen);
+  s.add(lap);
+  // taza y planta
+  const mug = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.1, 0.24, 32), new THREE.MeshStandardMaterial({ color: "#ffd43b", roughness: 0.4 })); mug.position.set(1.15, 0.93, -0.1); mug.castShadow = true; s.add(mug);
+  const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.13, 0.3, 24), new THREE.MeshStandardMaterial({ color: "#e4572e", roughness: 0.7 })); pot.position.set(-1.3, 0.96, -0.5); s.add(pot);
+  const R = rng(4);
+  for (let i = 0; i < 9; i++) { const l = new THREE.Mesh(new THREE.SphereGeometry(0.13 + R() * 0.08, 16, 12), new THREE.MeshStandardMaterial({ color: "#3f9b5a", roughness: 0.8 })); l.position.set(-1.3 + (R() - 0.5) * 0.3, 1.2 + R() * 0.35, -0.5 + (R() - 0.5) * 0.3); s.add(l); }
+  // persona de espaldas
+  const p = makePerson("#4f9dde", "#c98e5e"); p.position.set(-0.05, 0.05, 1.05); p.scale.setScalar(1.05); s.add(p);
+  const hair = new THREE.Mesh(new THREE.SphereGeometry(0.275, 24, 16, 0, Math.PI * 2, 0, Math.PI / 1.7), new THREE.MeshStandardMaterial({ color: "#2b1d16", roughness: 0.8 })); hair.position.y = 1.6; p.add(hair);
+  const chair = new THREE.Mesh(new RoundedBoxGeometry(0.9, 1.1, 0.12, 3, 0.05), new THREE.MeshStandardMaterial({ color: "#26242f", roughness: 0.7 })); chair.position.set(-0.05, 1.0, 1.42); s.add(chair);
+  function update(t, dur) {
+    const t3 = L.h3.ini;
+    const k = eio(seg(t, 0, t3 + 0.2));
+    cam.position.set(lerp(1.5, 1.05, k), lerp(2.45, 2.0, k), lerp(4.0, 2.8, k));
+    cam.lookAt(lerp(0.15, 0.05, k), lerp(1.2, 1.3, k), -0.55);
+    p.userData.head.rotation.y = Math.sin(t * 1.4) * 0.08;
+    // congelado: 50 ms
+    const fz = seg(t, t3, t3 + 0.25);
+    post.uniforms.uSat.value = lerp(1, 0.25, fz);
+    const ms = Math.round(eo(seg(t, t3, t3 + 0.55)) * 50);
+    $("#msN").textContent = ms + " ms";
+    $("#ovMs").style.opacity = fz;
+    $("#ovMs").style.transform = `scale(${lerp(0.8, 1, back(seg(t, t3, t3 + 0.35)))})`;
+    $("#flash").style.opacity = Math.max(0, 0.5 - Math.abs(t - (t3 + 0.55)) * 3);
+    return { s, cam };
+  }
+  return { update };
+})();
+
+// =====================================================================
+// B — Un ojo parpadea: 100–400 ms vs 50 ms
+// =====================================================================
+const B = (() => {
+  const s = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(34, W / H, 0.1, 100);
+  s.add(skyDome("#2b1f3a", "#4a2c3f", "#1a1424", 50));
+  s.environment = envFrom("#ffffff", "#9fb3c8", "#2a2a33");
+  s.add(new THREE.HemisphereLight("#fff4e6", "#3a2a33", 1.2));
+  const key = new THREE.DirectionalLight("#ffffff", 2.4); key.position.set(2, 3, 5); s.add(key);
+  // iris
+  const ic = canvasTex(2048, 1024); const x = ic.x;
+  x.fillStyle = "#f7f3ee"; x.fillRect(0, 0, 2048, 1024);
+  for (let i = 0; i < 60; i++) { x.strokeStyle = `rgba(200,60,60,${0.08 + (i % 3) * 0.03})`; x.lineWidth = 2; x.beginPath(); const y0 = 512 + (i - 30) * 14; x.moveTo(0, y0); x.bezierCurveTo(300, y0 + 40, 300, y0 - 40, 380, 512); x.stroke(); }
+  const cx = 512, cy = 512, R0 = 150;
+  const g = x.createRadialGradient(cx, cy, 30, cx, cy, R0);
+  g.addColorStop(0, "#1a0f08"); g.addColorStop(0.32, "#3a2412"); g.addColorStop(0.45, "#8a5a24"); g.addColorStop(0.75, "#c88a3a"); g.addColorStop(0.92, "#6a4520"); g.addColorStop(1, "#2a1a0e");
+  x.fillStyle = g; x.beginPath(); x.arc(cx, cy, R0, 0, 7); x.fill();
+  for (let i = 0; i < 160; i++) { const a = (i / 160) * Math.PI * 2; x.strokeStyle = `rgba(${i % 2 ? "255,210,140" : "60,30,10"},.35)`; x.lineWidth = 2; x.beginPath(); x.moveTo(cx + Math.cos(a) * 52, cy + Math.sin(a) * 52); x.lineTo(cx + Math.cos(a) * 140, cy + Math.sin(a) * 140); x.stroke(); }
+  x.fillStyle = "#050302"; x.beginPath(); x.arc(cx, cy, 50, 0, 7); x.fill();
+  ic.tex.needsUpdate = true;
+  const eye = new THREE.Mesh(new THREE.SphereGeometry(1, 96, 48), new THREE.MeshPhysicalMaterial({ map: ic.tex, roughness: 0.25, clearcoat: 1, clearcoatRoughness: 0.05 }));
+  s.add(eye);
+  const glint = glowSprite(GLOW, 0.3, 0xffffff, 0.9); glint.position.set(0.25, 0.3, 1.02); s.add(glint);
+  const skin = new THREE.MeshStandardMaterial({ color: "#d9a07a", roughness: 0.6, side: THREE.DoubleSide });
+  const up = new THREE.Mesh(new THREE.SphereGeometry(1.06, 64, 32, 0, Math.PI * 2, 0, Math.PI / 2), skin);
+  const lo = new THREE.Mesh(new THREE.SphereGeometry(1.055, 64, 32, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), skin);
+  const upG = new THREE.Group(), loG = new THREE.Group(); upG.add(up); loG.add(lo); s.add(upG, loG);
+  const face = new THREE.Mesh(new THREE.TorusGeometry(1.16, 0.22, 24, 64), new THREE.MeshStandardMaterial({ color: "#c98e6a", roughness: 0.7 })); face.scale.set(1.2, 0.85, 0.5); face.position.z = -0.25; s.add(face);
+  function update(t, dur) {
+    // parpadeo en cámara lenta
+    const bl = seg(t, 0.55, 0.85), op = seg(t, 0.85, 1.25);
+    const close = bl < 1 ? eio(bl) : 1 - eio(op);
+    upG.rotation.x = lerp(-0.95, 0, close);
+    loG.rotation.x = lerp(0.6, 0, close);
+    eye.rotation.y = Math.sin(t * 2) * 0.05; eye.rotation.x = Math.sin(t * 1.3) * 0.04;
+    glint.visible = close < 0.6;
+    cam.position.set(0, -0.15, lerp(7.2, 6.4, t / dur)); cam.lookAt(0, 0.25, 0);
+    $("#ovBars").style.opacity = seg(t, 0.15, 0.4);
+    $("#barA").style.width = (eo(seg(t, 0.3, 1.2)) * 100) + "%";
+    $("#barB").style.width = (eo(seg(t, 0.9, 1.3)) * 14) + "%";
+    return { s, cam };
+  }
+  return { update };
+})();
+
+// =====================================================================
+// C — El estudio (2006) y los posteriores
+// =====================================================================
+const C = (() => {
+  const s = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(38, W / H, 0.1, 100);
+  s.add(skyDome("#0f2238", "#183a5a", "#0b1624", 50));
+  s.environment = envFrom("#ffffff", "#a8c4dd", "#334455");
+  s.add(new THREE.HemisphereLight("#e8f2ff", "#20303f", 1.3));
+  const key = new THREE.DirectionalLight("#fff6e8", 2.6); key.position.set(-2, 3, 5); s.add(key);
+  function paper(title, year, hl) {
+    const ct = canvasTex(1240, 1754); const x = ct.x, w = 1240;
+    const draw = (k) => {
+      x.fillStyle = "#fbfaf6"; x.fillRect(0, 0, w, 1754);
+      x.fillStyle = "#8a877f"; x.font = "600 30px Inter"; x.fillText("Behaviour & Information Technology · " + year, 90, 120);
+      x.fillStyle = "#15141b"; x.font = "800 64px Archivo";
+      let y = 250;
+      title.forEach((ln) => {
+        if (hl && ln.includes(hl)) {
+          const a = ln.indexOf(hl), pre = x.measureText(ln.slice(0, a)).width, ww = x.measureText(hl).width;
+          x.fillStyle = "#ffd43b"; x.fillRect(90 + pre - 6, y - 56, (ww + 12) * k, 74); x.fillStyle = "#15141b";
+        }
+        x.fillText(ln, 90, y); y += 82;
+      });
+      x.fillStyle = "#55524b"; x.font = "600 32px Inter"; x.fillText(year === "2006" ? "Lindgaard et al. · Carleton University, Canadá" : "Estudio posterior", 90, y + 30);
+      x.fillStyle = "#e3e0d8"; for (let i = 0; i < 16; i++) { x.fillRect(90, y + 110 + i * 56, i % 5 === 4 ? 620 : 1060, 22); }
+      ct.tex.needsUpdate = true;
+    };
+    draw(0);
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 2.97), new THREE.MeshStandardMaterial({ map: ct.tex, roughness: 0.85, side: THREE.DoubleSide }));
+    m.userData.draw = draw; return m;
+  }
+  const p1 = paper(["Attention web designers:", "You have 50 milliseconds", "to make a good first", "impression!"], "2006", "50 milliseconds");
+  const p2 = paper(["Users judge websites", "in as little as", "50 milliseconds"], "2012", "50 milliseconds");
+  const p3 = paper(["First impressions of", "web pages form", "almost instantly"], "2010", null);
+  s.add(p3, p2, p1);
+  let lastK = -1;
+  function update(t, dur) {
+    const t6 = L.h6.ini - CUT.C;
+    const inK = eo(seg(t, 0, 0.6));
+    p1.position.set(lerp(3, 0, inK), lerp(-2.5, 0.35, inK), 0.2); p1.rotation.set(lerp(-0.6, -0.08, inK), lerp(0.9, 0.12, inK) + Math.sin(t) * 0.03, lerp(0.4, 0.02, inK));
+    const k = Math.round(eo(seg(t, 0.7, 1.4)) * 20) / 20; if (k !== lastK) { p1.userData.draw(k); lastK = k; }
+    const k2 = eo(seg(t, t6, t6 + 0.5)), k3 = eo(seg(t, t6 + 0.3, t6 + 0.8));
+    p2.position.set(lerp(-3.5, -0.75, k2), lerp(1.5, 0.75, k2), -0.4); p2.rotation.set(-0.05, 0.25, -0.12 * k2);
+    p3.position.set(lerp(3.5, 0.8, k3), lerp(1.8, 0.95, k3), -0.7); p3.rotation.set(-0.05, -0.1, 0.1 * k3);
+    p2.visible = t > t6 - 0.05; p3.visible = t > t6 + 0.25;
+    if (p2.visible && !p2.userData.done) { p2.userData.draw(1); p2.userData.done = true; }
+    cam.position.set(Math.sin(t * 0.4) * 0.2, 0.1, lerp(7.4, 6.6, t / dur)); cam.lookAt(0, 0.45, 0);
+    $("#chipA").style.opacity = seg(t, 0.25, 0.45);
+    $("#chipB").style.opacity = seg(t, t6 + 0.2, t6 + 0.45);
+    return { s, cam };
+  }
+  return { update };
+})();
+
+// =====================================================================
+// D/E — Celular cargando 3 s; la mitad de la gente se va. Luego carga una página buena.
+// =====================================================================
+const D = (() => {
+  const s = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(40, W / H, 0.1, 200);
+  s.add(skyDome("#20325a", "#3c5d8f", "#1b2235", 80));
+  s.environment = envFrom("#9fc4ff", "#3c5d8f", "#1b2235");
+  s.fog = new THREE.Fog("#2b3f66", 18, 60);
+  s.add(new THREE.HemisphereLight("#dfe9ff", "#2a2a38", 1.2));
+  const key = new THREE.DirectionalLight("#fff2dc", 2.4); key.position.set(-4, 8, 6); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -12, right: 12, top: 12, bottom: -12 }); s.add(key);
+  const floor = new THREE.Mesh(new THREE.CircleGeometry(30, 64), new THREE.MeshStandardMaterial({ color: "#2e3a52", roughness: 0.9 })); floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; s.add(floor);
+  const phone = makePhone(); phone.scale.setScalar(2.2); phone.position.set(0, 2.9, -3.2); s.add(phone);
+  const scr = phone.userData.scr;
+  const halo = glowSprite(GLOW, 9, 0x9fc4ff, 0.35); halo.position.set(0, 2.9, -3.6); s.add(halo);
+  // multitud: 100 personas
+  const R = rng(8), people = [];
+  const bodyI = new THREE.InstancedMesh(new THREE.CapsuleGeometry(0.16, 0.36, 4, 10), new THREE.MeshStandardMaterial({ roughness: 0.6 }), 100);
+  const headI = new THREE.InstancedMesh(new THREE.SphereGeometry(0.14, 16, 10), new THREE.MeshStandardMaterial({ color: "#f1c27d", roughness: 0.6 }), 100);
+  bodyI.castShadow = headI.castShadow = true;
+  for (let i = 0; i < 100; i++) {
+    const gx = (i % 10) - 4.5, gz = Math.floor(i / 10);
+    people.push({ x: gx * 0.62 + (R() - 0.5) * 0.15, z: -1.2 + gz * 0.62 + (R() - 0.5) * 0.15, leave: false, dir: R() < 0.5 ? -1 : 1, d: R(), ph: R() * 6 });
+  }
+  // 53 se van
+  const idx = [...Array(100).keys()].sort(() => R() - 0.5).slice(0, 53); idx.forEach((i) => (people[i].leave = true));
+  s.add(bodyI, headI);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), sc = new THREE.Vector3(1, 1, 1), ps = new THREE.Vector3();
+  const blue = new THREE.Color("#4f9dde"), red = new THREE.Color("#ff5a5f"), green = new THREE.Color("#25d366");
+  const sparks = []; for (let i = 0; i < 40; i++) { const sp = glowSprite(GLOW, 0.4, [0xffd43b, 0xffffff, 0x7ddfb0][i % 3]); s.add(sp); sparks.push({ sp, a: R() * Math.PI * 2, r: 1.2 + R() * 2.2, v: 1 + R() * 2, z: R() }); }
+  let siteDrawn = false;
+  function update(t, dur, abs) {
+    const E = abs >= CUT.E, tE = abs - CUT.E;
+    const t7 = L.h7.ini - CUT.D, t8 = L.h8.ini - CUT.D, t9 = L.h9.ini - CUT.D;
+    // pantalla
+    if (!E) { drawLoading(scr.x, 600, 1280, t); scr.tex.needsUpdate = true; siteDrawn = false; }
+    else if (!siteDrawn) { drawSite(scr.x, 600, 1280, true); scr.tex.needsUpdate = true; siteDrawn = true; }
+    phone.rotation.y = Math.sin(abs * 0.8) * 0.12; phone.position.y = 2.9 + Math.sin(abs * 1.6) * 0.05;
+    // contador de segundos y porcentaje
+    const secs = clamp((t - t7 + 0.05) / ((L.h7.fin - L.h7.ini) / 3), 0, 3.4);
+    $("#secN").textContent = secs.toFixed(1).replace(".", ",") + " s";
+    $("#ovSec").style.opacity = E ? 0 : seg(t, t7, t7 + 0.2) * (1 - seg(t, t8 - 0.15, t8));
+    $("#secN").style.color = secs >= 3 ? "#e03131" : "#15141b";
+    $("#pctN").textContent = Math.round(eo(seg(t, t8 + 0.1, t8 + 0.9)) * 53) + " %";
+    $("#ovPct").style.opacity = E ? 0 : seg(t, t8, t8 + 0.2);
+    // gente
+    const turn = seg(t, t8 + 0.1, t8 + 0.9), go = seg(t, t9 - 0.1, t9 + 1.2);
+    people.forEach((p, i) => {
+      let x = p.x, z = p.z, y = 0, a = 1;
+      if (p.leave && !E) { x += p.dir * ei(go) * (6 + p.d * 4); z += ei(go) * 2; y = Math.abs(Math.sin((t * 9 + p.ph))) * 0.08 * (go > 0 ? 1 : 0); }
+      if (p.leave && E) a = 0;
+      if (!p.leave && E) y = Math.max(0, Math.sin(tE * 9 + p.ph)) * 0.25 * seg(tE, 0.2, 0.4);
+      const col = !p.leave ? (E ? blue.clone().lerp(green, seg(tE, 0.1, 0.5)) : blue) : blue.clone().lerp(red, clamp(turn * 1.5 - p.d * 0.5));
+      ps.set(x, 0.34 + y, z); q.identity(); sc.setScalar(a); m4.compose(ps, q, sc); bodyI.setMatrixAt(i, m4); bodyI.setColorAt(i, col);
+      ps.set(x, 0.82 + y, z); m4.compose(ps, q, sc); headI.setMatrixAt(i, m4);
+    });
+    bodyI.instanceMatrix.needsUpdate = headI.instanceMatrix.needsUpdate = true; bodyI.instanceColor.needsUpdate = true;
+    // cámara: primero el celular, después se aleja y muestra la multitud
+    const pull = eio(seg(t, t8 - 0.3, t8 + 0.8));
+    if (!E) { cam.position.set(lerp(0, 0.6, pull), lerp(3.1, 6.2, pull), lerp(4.2, 9.5, pull)); cam.lookAt(0, lerp(2.95, 1.6, pull), lerp(-3.2, -1.2, pull)); }
+    else { const k = eo(seg(tE, 0, dur)); cam.position.set(lerp(0.6, 0, k), lerp(6.2, 3.6, k), lerp(9.5, 5.5, k)); cam.lookAt(0, lerp(1.6, 2.6, k), lerp(-1.2, -3.2, k)); }
+    sparks.forEach((o) => { o.sp.visible = E; if (E) { const r = o.r * eo(seg(tE, 0, 1.2)); o.sp.position.set(Math.cos(o.a) * r, 2.9 + Math.sin(o.a) * r * 1.2, -3.0 + o.z); o.sp.material.opacity = 1 - seg(tE, 0.9, 1.8); } });
+    halo.material.color.set(E ? 0xffd43b : 0x9fc4ff); halo.material.opacity = E ? 0.6 : 0.35;
+    if (E) {
+      $("#flash").style.opacity = Math.max(0, 0.6 - tE * 2.5);
+      $("#ovOk").style.opacity = seg(tE, 0.25, 0.45); $("#ovOk").style.transform = `translateX(-50%) scale(${lerp(0.6, 1, back(seg(tE, 0.25, 0.55)))})`;
+    }
+    return { s, cam };
+  }
+  return { update };
+})();
+
+await start({ A, B, C, D, E: D }, ["#ovMs", "#ovBars", "#chipA", "#chipB", "#ovSec", "#ovPct", "#ovOk"]);
+</script>
+</body>
+</html>

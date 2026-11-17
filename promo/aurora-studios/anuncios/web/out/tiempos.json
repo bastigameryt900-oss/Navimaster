@@ -1,0 +1,113 @@
+{
+ "duracion": 37.139,
+ "lineas": [
+  {
+   "id": "h1",
+   "texto": "¿Sabías que alguien decide",
+   "ini": 0.25,
+   "fin": 1.736
+  },
+  {
+   "id": "h2",
+   "texto": "si le gusta tu página web",
+   "ini": 1.766,
+   "fin": 3.347
+  },
+  {
+   "id": "h3",
+   "texto": "en solo 50 milisegundos?",
+   "ini": 3.377,
+   "fin": 5.253
+  },
+  {
+   "id": "h4",
+   "texto": "Es menos de lo que dura un parpadeo.",
+   "ini": 5.553,
+   "fin": 7.485
+  },
+  {
+   "id": "h5",
+   "texto": "Lo descubrió un estudio en Canadá,",
+   "ini": 7.785,
+   "fin": 9.595
+  },
+  {
+   "id": "h6",
+   "texto": "y estudios posteriores lo confirmaron.",
+   "ini": 9.625,
+   "fin": 11.801
+  },
+  {
+   "id": "h7",
+   "texto": "Y si tu página tarda más de 3 segundos en cargar,",
+   "ini": 12.101,
+   "fin": 15.044
+  },
+  {
+   "id": "h8",
+   "texto": "más de la mitad de las visitas desde el celular",
+   "ini": 15.094,
+   "fin": 17.57
+  },
+  {
+   "id": "h9",
+   "texto": "se van antes de verla.",
+   "ini": 17.6,
+   "fin": 18.994
+  },
+  {
+   "id": "h10",
+   "texto": "Tu página es tu primera impresión.",
+   "ini": 19.294,
+   "fin": 21.291
+  },
+  {
+   "id": "p1",
+   "texto": "Aurora Studios",
+   "ini": 21.791,
+   "fin": 22.793
+  },
+  {
+   "id": "p2",
+   "texto": "hace páginas web rápidas,",
+   "ini": 22.893,
+   "fin": 24.53
+  },
+  {
+   "id": "p3",
+   "texto": "modernas y adaptadas a celulares,",
+   "ini": 24.56,
+   "fin": 26.56
+  },
+  {
+   "id": "p4",
+   "texto": "con WhatsApp directo,",
+   "ini": 26.59,
+   "fin": 27.991
+  },
+  {
+   "id": "p5",
+   "texto": "desde $70.000.",
+   "ini": 28.021,
+   "fin": 29.558
+  },
+  {
+   "id": "p6",
+   "texto": "Si estás interesado,",
+   "ini": 29.808,
+   "fin": 31.125
+  },
+  {
+   "id": "p7",
+   "texto": "mándanos un mensaje.",
+   "ini": 31.155,
+   "fin": 32.496
+  },
+  {
+   "id": "p8",
+   "texto": "(no respondemos en 50 ms… pero casi)",
+   "ini": 32.696,
+   "fin": 35.639
+  }
+ ]
+}

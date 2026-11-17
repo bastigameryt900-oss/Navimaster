@@ -1,0 +1,3 @@
+out/*
+!out/aurora-studios-*.mp4
+!out/tiempos.json

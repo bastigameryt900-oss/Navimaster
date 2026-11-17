@@ -1,0 +1,19 @@
+@font-face{font-family:"Inter";src:url(../../tiktok/assets/fonts/Inter-SemiBold.otf);font-weight:600}
+@font-face{font-family:"Inter";src:url(../../tiktok/assets/fonts/Inter-Bold.otf);font-weight:700 800}
+@font-face{font-family:"Archivo";src:url(../../assets/fonts/archivo-latin-wdth-normal.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden}
+canvas{display:block}
+.ov{position:absolute;pointer-events:none;opacity:0}
+#cap{position:absolute;left:30px;right:30px;top:1470px;text-align:center;z-index:20}
+#cap span{display:inline-block;background:#fff;color:#121212;font:600 52px/1.17 Inter,sans-serif;padding:14px 28px 17px;border-radius:16px;max-width:1010px;letter-spacing:-.005em}
+#cap span:empty{display:none}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:15}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 85% 70% at 50% 45%,transparent 55%,rgba(0,0,0,.45) 100%);z-index:1}
+/* piezas de superposición reutilizables */
+.big{left:0;right:0;text-align:center;color:#fff}
+.big b{display:block;font:800 200px/0.9 Archivo,sans-serif;font-stretch:78%;font-variant-numeric:tabular-nums;text-shadow:0 10px 50px rgba(0,0,0,.55)}
+.big span{display:block;font:700 44px/1.1 Inter;letter-spacing:.08em;text-transform:uppercase;text-shadow:0 4px 24px rgba(0,0,0,.6);margin-top:10px}
+.chip{left:50%;transform:translateX(-50%);font:700 34px/1 Inter;letter-spacing:.12em;text-transform:uppercase;color:#fff;border:3px solid rgba(255,255,255,.7);border-radius:99px;padding:16px 30px;background:rgba(10,12,20,.55);white-space:nowrap}
+.pill{display:flex;align-items:center;gap:18px;background:#fff;color:#121212;font:800 54px/1 Inter;padding:24px 40px;border-radius:99px;box-shadow:0 20px 60px rgba(0,0,0,.4);white-space:nowrap}

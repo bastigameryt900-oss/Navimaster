@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<title>Aurora Studios — Imágenes para redes</title>
+<style>
+@font-face{font-family:"Archivo";src:url(../assets/fonts/archivo-latin-wdth-normal.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:block}
+@font-face{font-family:"Inter";src:url(../tiktok/assets/fonts/Inter-SemiBold.otf);font-weight:600}
+@font-face{font-family:"Inter";src:url(../tiktok/assets/fonts/Inter-Bold.otf);font-weight:700 800}
+:root{--ink:#141319;--ink2:#1d1c25;--cream:#fdfcf9;--sun:#ffd43b;--sunset:#ff9f45;--lime:#c8f04a;--mint:#7ddfb0;--blurple:#5865f2;--wa:#25d366;--red:#e8590c;--muted:rgba(253,252,249,.66);--line:rgba(253,252,249,.16)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#777;font-family:Archivo,sans-serif;-webkit-font-smoothing:antialiased;padding:40px;display:flex;flex-direction:column;gap:40px}
+svg.i{width:1em;height:1em;flex:none}
+.art{position:relative;width:1080px;height:1350px;overflow:hidden;background:var(--cream);color:var(--ink)}
+.art.story{height:1920px}
+.dark{background:var(--ink);color:var(--cream)}
+.glow{position:absolute;border-radius:50%;filter:blur(10px)}
+.disp{font-weight:800;font-stretch:78%;letter-spacing:-.015em;line-height:.9}
+.top{position:absolute;left:72px;right:72px;top:64px;display:flex;align-items:center;gap:18px;font-size:34px;font-weight:800;font-stretch:90%}
+.top .logo{width:72px;height:72px}
+.top .r{margin-left:auto;font:600 26px Inter;opacity:.7}
+.logo svg{width:100%;height:100%;display:block}
+.bot{position:absolute;left:72px;right:72px;bottom:60px;display:flex;align-items:center;gap:16px;font:700 28px Inter}
+.bot .wa{display:flex;align-items:center;gap:12px;background:var(--wa);color:#fff;padding:16px 26px;border-radius:99px}
+.bot .wa svg{width:34px;height:34px}
+.bot .r{margin-left:auto;opacity:.75}
+.chip{display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 24px;border-radius:99px;border:2.5px solid currentColor;font:700 24px Inter;letter-spacing:.12em;text-transform:uppercase}
+.chip .dot{width:14px;height:14px;border-radius:50%;background:var(--a,var(--sun))}
+.new{background:var(--sun);color:var(--ink);border-color:var(--sun)}
+.price{display:flex;gap:18px}
+.pb{flex:1;border-radius:30px;padding:26px 30px;border:2.5px solid var(--line);background:var(--ink2)}
+.pb small{display:block;font:700 22px Inter;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.pb b{display:block;font-size:80px;font-weight:800;font-stretch:82%;margin-top:10px;line-height:1}
+.pb b em{font:700 26px Inter;font-style:normal;opacity:.7;margin-left:8px}
+.pb.hi{border-color:var(--a);background:color-mix(in srgb,var(--a) 18%,var(--ink2))}
+.light .pb{background:#fff;border-color:#e6e1d6}
+.light .pb.hi{background:color-mix(in srgb,var(--a) 22%,#fff);border-color:var(--a)}
+.feats{display:flex;flex-wrap:wrap;gap:14px}
+.feats span{display:flex;align-items:center;gap:12px;height:62px;padding:0 26px 0 18px;border-radius:99px;font:700 27px Inter;background:rgba(253,252,249,.08);border:2px solid var(--line)}
+.light .feats span{background:#fff;border-color:#e6e1d6}
+.feats svg{width:30px;height:30px;color:var(--a)}
+.sun{position:absolute;border-radius:50%;background:radial-gradient(circle at 50% 30%,#ffe270,var(--sun) 45%,var(--sunset));overflow:hidden}
+.sun i{position:absolute;left:0;right:0;background:var(--cream);display:block}
+/* --- mockups --- */
+.browser{position:absolute;border-radius:26px;background:#fff;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.45)}
+.br-top{height:56px;background:#eceae4;display:flex;align-items:center;gap:10px;padding:0 20px}
+.br-top i{width:16px;height:16px;border-radius:50%;display:block}
+.br-top i:nth-child(1){background:#ff6159}.br-top i:nth-child(2){background:#ffbd2e}.br-top i:nth-child(3){background:#28c941}
+.url{margin-left:16px;flex:1;height:34px;border-radius:10px;background:#fff;display:flex;align-items:center;gap:8px;padding:0 14px;font:600 20px Inter;color:#3b3a40}
+.url svg{width:18px;height:18px;color:#1a9b4b}
+.pg{padding:24px 32px;background:var(--cream);color:var(--ink);height:100%}
+.pg h4{font-size:56px;font-weight:800;font-stretch:80%;line-height:.92;margin-top:24px}
+.pg h4 em{font-style:normal;color:var(--red)}
+.pg .ln{height:12px;border-radius:6px;background:#d8d3c8;margin-top:14px}
+.pg .cta{display:inline-flex;align-items:center;gap:10px;margin-top:22px;height:54px;padding:0 24px;border-radius:99px;background:var(--wa);color:#fff;font:700 22px Inter}
+.pg .cta svg{width:24px;height:24px}
+.pg .img{position:absolute;right:32px;top:130px;width:300px;height:220px;border-radius:20px;background:linear-gradient(160deg,#2a2833,#141319);overflow:hidden}
+.pg .img::after{content:"";position:absolute;left:70px;top:90px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle at 50% 30%,#ffe270,var(--sun) 50%,var(--sunset))}
+.phone{position:absolute;border-radius:50px;background:#0b0b0f;padding:11px;box-shadow:0 0 0 2px #3a3846,0 40px 90px rgba(0,0,0,.5)}
+.phone .scr{position:relative;width:100%;height:100%;border-radius:40px;overflow:hidden}
+.phone .isl{position:absolute;left:50%;top:12px;width:96px;height:28px;margin-left:-48px;border-radius:99px;background:#0b0b0f;z-index:3}
+.dc{background:#313338;color:#dbdee1;font:600 24px Inter;border-radius:26px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.5);position:absolute}
+.dc .h{height:70px;display:flex;align-items:center;gap:10px;padding:0 26px;background:#2b2d31;color:#f2f3f5;font-weight:700;font-size:28px}
+.dc .h span{color:#80848e;font-size:38px}
+.dc .m{display:flex;gap:16px;padding:20px 26px 0}
+.dc .av{width:58px;height:58px;border-radius:50%;overflow:hidden;flex:none}
+.dc .n{color:#f2f3f5;font-weight:700;display:flex;align-items:center;gap:10px}
+.dc .n b{font:800 15px Inter;background:var(--blurple);color:#fff;padding:3px 7px;border-radius:5px}
+.dc .t{margin-top:6px;line-height:1.35}
+.dc .cmd{background:rgba(88,101,242,.3);color:#c9cdfb;padding:2px 8px;border-radius:6px;font-weight:700}
+.dc ul{list-style:none;margin-top:6px}
+.dc li{display:flex;align-items:center;gap:12px;height:42px;color:#f2f3f5}
+.dc li::before{content:"";width:9px;height:9px;border-radius:50%;background:#7c86ff}
+.yt{position:absolute;border-radius:26px;overflow:hidden;background:radial-gradient(ellipse at 75% 40%,rgba(255,78,69,.6),transparent 60%),linear-gradient(135deg,#1e1b26,#0d0c11);box-shadow:0 40px 90px rgba(0,0,0,.5)}
+.yt .big{position:absolute;left:44px;top:56px;font-size:92px;font-weight:800;font-stretch:76%;line-height:.88;color:#fff}
+.yt .big em{font-style:normal;color:var(--sun)}
+.yt .play{position:absolute;right:60px;bottom:70px;width:140px;height:100px;color:#ff0033}
+.yt .play svg{width:140px;height:100px}
+.yt .bar{position:absolute;left:28px;right:28px;bottom:28px;height:8px;background:rgba(255,255,255,.3);border-radius:4px}
+.yt .bar i{display:block;height:100%;width:38%;background:#ff0033;border-radius:4px}
+.step{display:flex;align-items:center;gap:30px}
+.step .n{width:104px;height:104px;border-radius:50%;border:4px solid var(--a,var(--ink));display:grid;place-items:center;font-size:54px;font-weight:800;font-stretch:80%;flex:none}
+.step b{display:block;font-size:46px;font-weight:800;font-stretch:86%;line-height:1}
+.step small{display:block;font:600 26px Inter;opacity:.7;margin-top:8px}
+.quote{border-radius:34px;padding:36px 40px;position:relative}
+.quote .stars{display:flex;gap:6px;color:var(--sun)}
+.quote .stars svg{width:38px;height:38px;fill:var(--sun)}
+.quote q{display:block;font:600 40px/1.25 Inter;margin-top:18px;quotes:"“" "”"}
+.quote .who{margin-top:18px;font:700 26px Inter;opacity:.75}
+.quote .u{display:inline-flex;align-items:center;gap:10px;font:600 22px Inter;opacity:.7;margin-top:6px}
+.plist{display:flex;flex-direction:column;gap:16px}
+.plist .row{display:flex;align-items:center;gap:22px;border-radius:28px;background:#fff;border:2.5px solid #e6e1d6;padding:22px 30px}
+.plist .row .ic{width:76px;height:76px;border-radius:22px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 25%,#fff);color:var(--ink);flex:none}
+.plist .row .ic svg{width:40px;height:40px}
+.plist .row b{font-size:42px;font-weight:800;font-stretch:86%}
+.plist .row small{display:block;font:600 22px Inter;opacity:.6;margin-top:4px}
+.plist .row .p{margin-left:auto;text-align:right;font-size:46px;font-weight:800;font-stretch:82%}
+.plist .row .p em{display:block;font:700 18px Inter;font-style:normal;opacity:.6;letter-spacing:.1em;text-transform:uppercase}
+.plist .row.cot .p{background:var(--sun);border-radius:18px;padding:12px 18px;font-size:34px}
+</style>
+</head>
+<body>
+
+<!-- 01 Portada -->
+<section class="art" data-name="post-01-portada">
+  <div class="glow" style="left:-200px;top:820px;width:1480px;height:1480px;background:radial-gradient(closest-side,rgba(255,212,59,.35),transparent)"></div>
+  <div class="sun" data-stripes style="left:90px;top:900px;width:900px;height:900px"></div>
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">aurorastudios.shop</span></div>
+  <h1 class="disp" style="position:absolute;left:68px;top:230px;font-size:190px">Tecnología<br>que impulsa<br><span style="color:var(--red)">tus ideas.</span></h1>
+  <div style="position:absolute;left:72px;top:820px;display:flex;flex-wrap:wrap;gap:14px;width:940px;font:700 30px Inter">
+    <span class="chip" style="letter-spacing:0;text-transform:none;font-size:30px">Páginas web</span><span class="chip" style="letter-spacing:0;text-transform:none;font-size:30px">Bots de Discord</span><span class="chip" style="letter-spacing:0;text-transform:none;font-size:30px">Reels</span><span class="chip" style="letter-spacing:0;text-transform:none;font-size:30px">YouTube</span><span class="chip new" style="letter-spacing:0;text-transform:none;font-size:30px;background:var(--ink);color:var(--sun);border-color:var(--ink)">Apps y juegos</span>
+  </div>
+</section>
+
+<!-- 02 Páginas web -->
+<section class="art dark" data-name="post-02-paginas-web" style="--a:#ffd43b">
+  <div class="glow" style="left:-300px;top:-300px;width:1200px;height:1200px;background:radial-gradient(closest-side,rgba(255,212,59,.25),transparent)"></div>
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">aurorastudios.shop</span></div>
+  <div style="position:absolute;left:72px;top:180px"><span class="chip" style="color:var(--muted)"><i class="dot"></i>Tu negocio en internet</span></div>
+  <h2 class="disp" style="position:absolute;left:68px;top:262px;font-size:150px">Páginas <span style="color:var(--sun)">Web</span></h2>
+  <div class="browser" style="left:72px;top:440px;width:700px;height:460px"><div class="br-top"><i></i><i></i><i></i><div class="url"><i data-i="lock"></i>tunegocio.cl</div></div><div class="pg"><h4>Tu negocio,<br><em>en línea.</em></h4><div class="ln" style="width:300px"></div><div class="ln" style="width:220px"></div><div class="cta"><i data-i="whatsapp"></i>Escríbenos</div><div class="img"></div></div></div>
+  <div class="phone" style="left:700px;top:520px;width:250px;height:470px"><div class="scr" style="background:var(--cream);padding:56px 20px"><div class="isl"></div><div class="disp" style="font-size:38px;color:var(--ink)">Tu negocio,<br><span style="color:var(--red)">en línea.</span></div><div style="height:120px;border-radius:16px;margin-top:16px;background:linear-gradient(160deg,#2a2833,#141319)"></div><div style="margin-top:16px;height:48px;border-radius:99px;background:var(--wa)"></div></div></div>
+  <div class="feats" style="position:absolute;left:72px;top:1000px;width:940px"><span><i data-i="smartphone"></i>Adaptada a celulares</span><span><i data-i="message-circle"></i>WhatsApp directo</span><span><i data-i="search"></i>SEO técnico</span></div>
+  <div class="price" style="position:absolute;left:72px;right:72px;top:1150px"><div class="pb"><small>Sin dominio</small><b>$70.000<em>CLP</em></b></div><div class="pb hi"><small>Con dominio anual</small><b>$85.000<em>CLP</em></b></div></div>
+</section>
+
+<!-- 03 Bots de Discord -->
+<section class="art dark" data-name="post-03-bots-discord" style="--a:#7c86ff">
+  <div class="glow" style="left:200px;top:300px;width:1200px;height:1200px;background:radial-gradient(closest-side,rgba(88,101,242,.35),transparent)"></div>
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">aurorastudios.shop</span></div>
+  <div style="position:absolute;left:72px;top:180px"><span class="chip" style="color:var(--muted)"><i class="dot"></i>Comunidades</span></div>
+  <h2 class="disp" style="position:absolute;left:68px;top:262px;font-size:150px">Bots de <span style="color:#7c86ff">Discord</span></h2>
+  <div class="dc" style="left:72px;right:72px;top:440px;height:500px">
+    <div class="h"><span>#</span>cotizaciones</div>
+    <div class="m"><div class="av" style="background:linear-gradient(135deg,#ff9f45,#ff6fae)"></div><div><div class="n">Tú</div><div class="t">Usaste <span class="cmd">/servicios</span></div></div></div>
+    <div class="m"><div class="av logo" data-logo></div><div><div class="n">Aurora Bot <b>APP</b></div><div class="t">Esto es lo que hacemos:</div><ul><li>Bots de Discord</li><li>Páginas Web</li><li>Reels y videos para YouTube</li><li>Apps y juegos</li></ul></div></div>
+  </div>
+  <div class="feats" style="position:absolute;left:72px;top:1000px;width:940px"><span><i data-i="zap"></i>Comandos a medida</span><span><i data-i="shield-check"></i>Moderación y roles</span><span><i data-i="server"></i>Hosting 24/7</span></div>
+  <div class="price" style="position:absolute;left:72px;right:72px;top:1150px"><div class="pb"><small>Sin hosting</small><b>$40.000<em>CLP</em></b></div><div class="pb hi"><small>Con hosting</small><b>$50.000<em>CLP</em></b></div></div>
+</section>
+
+<!-- 04 Reels -->
+<section class="art light" data-name="post-04-reels" style="--a:#ff9f45">
+  <div class="glow" style="left:400px;top:200px;width:1000px;height:1000px;background:radial-gradient(closest-side,rgba(255,159,69,.3),transparent)"></div>
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">aurorastudios.shop</span></div>
+  <div style="position:absolute;left:72px;top:180px"><span class="chip" style="color:#8a877f"><i class="dot"></i>Redes sociales</span></div>
+  <h2 class="disp" style="position:absolute;left:68px;top:262px;font-size:150px">Reels que<br><span style="color:var(--red)">enganchan</span></h2>
+  <div class="phone" style="left:735px;top:455px;width:280px;height:530px;transform:rotate(6deg)"><div class="scr" style="background:linear-gradient(170deg,#2b1d3a 0%,#7a2e4f 45%,#ff9f45 100%)"><div class="isl"></div>
+    <div style="position:absolute;left:40px;top:330px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffe270,var(--sun) 50%,transparent 72%)"></div>
+    <div class="disp" style="position:absolute;left:22px;top:180px;font-size:50px;color:#fff"><span style="background:var(--ink);padding:4px 12px;border-radius:10px">3 ideas</span><br><span style="background:var(--sun);color:var(--ink);padding:4px 12px;border-radius:10px;display:inline-block;margin-top:8px">para tu</span><br><span style="background:var(--ink);padding:4px 12px;border-radius:10px;display:inline-block;margin-top:8px">negocio</span></div>
+    <div style="position:absolute;right:16px;bottom:120px;display:flex;flex-direction:column;gap:24px;color:#fff;font-size:40px"><i data-i="heart" style="color:#ff3b5c"></i><i data-i="message-circle"></i></div>
+  </div></div>
+  <div style="position:absolute;left:72px;top:620px;width:560px;font:600 36px/1.35 Inter;color:#55524b">Edición de tu material o creación del video completo, en formato vertical y listo para publicar.</div>
+  <div class="feats" style="position:absolute;left:72px;top:1000px;width:940px"><span><i data-i="smartphone"></i>Formato vertical</span><span><i data-i="scissors"></i>Edición</span><span><i data-i="clapperboard"></i>Creación completa</span></div>
+  <div class="price" style="position:absolute;left:72px;right:72px;top:1150px"><div class="pb"><small>Edición</small><b>$10.000<em>CLP</em></b></div><div class="pb hi"><small>Creación</small><b>$15.000<em>CLP</em></b></div></div>
+</section>
+
+<!-- 05 YouTube -->
+<section class="art dark" data-name="post-05-youtube" style="--a:#ff5a5f">
+  <div class="glow" style="left:-200px;top:300px;width:1200px;height:1200px;background:radial-gradient(closest-side,rgba(255,78,69,.25),transparent)"></div>
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">aurorastudios.shop</span></div>
+  <div style="position:absolute;left:72px;top:180px"><span class="chip" style="color:var(--muted)"><i class="dot"></i>Tu canal</span></div>
+  <h2 class="disp" style="position:absolute;left:68px;top:262px;font-size:150px">Videos para<br><span style="color:#ff5a5f">YouTube</span></h2>
+  <div class="yt" style="left:72px;right:72px;top:560px;height:418px"><div class="big">TU CANAL,<br><em>NIVEL PRO</em></div><div class="play"><i data-i="youtube"></i></div><div class="bar"><i></i></div></div>
+  <div class="feats" style="position:absolute;left:72px;top:1010px;width:940px"><span><i data-i="play"></i>Videos largos</span><span><i data-i="scissors"></i>Edición</span><span><i data-i="clapperboard"></i>Creación completa</span></div>
+  <div class="price" style="position:absolute;left:72px;right:72px;top:1150px"><div class="pb"><small>Edición</small><b>$20.000<em>CLP</em></b></div><div class="pb hi"><small>Creación</small><b>$30.000<em>CLP</em></b></div></div>
+</section>
+
+<!-- 06 Apps y juegos -->
+<section class="art" data-name="post-06-apps-y-juegos" style="background:var(--sun)">
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">aurorastudios.shop</span></div>
+  <div style="position:absolute;right:80px;top:180px;width:230px;height:230px;border-radius:50%;background:var(--ink);color:var(--sun);display:grid;place-items:center;font-size:52px;font-weight:800;font-stretch:80%;transform:rotate(-12deg);box-shadow:inset 0 0 0 12px var(--ink),inset 0 0 0 15px rgba(255,212,59,.6)">NUEVO</div>
+  <div style="position:absolute;left:72px;top:250px;font-size:70px;font-weight:700;font-stretch:90%">Ahora también:</div>
+  <h2 class="disp" style="position:absolute;left:66px;top:340px;font-size:230px">Apps<br>y juegos.</h2>
+  <div style="position:absolute;left:72px;top:820px;display:grid;grid-template-columns:repeat(4,1fr);gap:22px;width:936px">
+    <div style="height:210px;border-radius:44px;background:var(--ink);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font:700 26px Inter"><i data-i="apple" style="font-size:84px"></i>iPhone</div>
+    <div style="height:210px;border-radius:44px;background:var(--ink);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font:700 26px Inter"><i data-i="android" style="font-size:84px"></i>Android</div>
+    <div style="height:210px;border-radius:44px;background:var(--ink);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font:700 26px Inter"><i data-i="windows" style="font-size:84px"></i>Windows</div>
+    <div style="height:210px;border-radius:44px;background:var(--ink);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font:700 26px Inter"><i data-i="gamepad-2" style="font-size:84px"></i>Juegos</div>
+  </div>
+  <div style="position:absolute;left:72px;top:1090px;display:flex;align-items:center;gap:18px;font-size:66px;font-weight:800;font-stretch:86%"><i data-i="whatsapp" style="color:#128c4a;font-size:70px"></i>Todo a cotización</div>
+  <div class="bot" style="font-size:26px"><span>Cuéntanos tu idea · +56 9 2227 4083</span><span class="r">@aurorastudioscl</span></div>
+</section>
+
+<!-- 07 Proceso -->
+<section class="art light" data-name="post-07-como-trabajamos" style="--a:#3fb984">
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">aurorastudios.shop</span></div>
+  <h2 class="disp" style="position:absolute;left:68px;top:190px;font-size:150px">¿Cómo<br><span style="color:#2f9e6c">trabajamos?</span></h2>
+  <div style="position:absolute;left:72px;top:500px;display:flex;flex-direction:column;gap:36px">
+    <div class="step"><span class="n">1</span><div><b>Conversamos tu idea</b><small>Por WhatsApp o el formulario</small></div></div>
+    <div class="step"><span class="n">2</span><div><b>Definimos la solución</b><small>Alcance, plazos y cotización clara</small></div></div>
+    <div class="step"><span class="n">3</span><div><b>Diseñamos y desarrollamos</b><small>Ajustamos los detalles contigo</small></div></div>
+    <div class="step"><span class="n">4</span><div><b>Probamos y entregamos</b><small>Y te explicamos cómo usarlo</small></div></div>
+  </div>
+  <div class="feats" style="position:absolute;left:72px;top:1130px;width:940px"><span><i data-i="badge-check"></i>Precio confirmado antes de empezar</span><span><i data-i="shield-check"></i>Sin cobros sorpresa</span></div>
+</section>
+
+<!-- 08 Clientes -->
+<section class="art dark" data-name="post-08-clientes">
+  <div class="glow" style="left:300px;top:-200px;width:1200px;height:1200px;background:radial-gradient(closest-side,rgba(125,223,176,.22),transparent)"></div>
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">aurorastudios.shop</span></div>
+  <h2 class="disp" style="position:absolute;left:68px;top:190px;font-size:140px">Clientes reales,<br><span style="color:var(--mint)">sitios reales.</span></h2>
+  <div class="quote" style="position:absolute;left:72px;right:72px;top:480px;background:var(--ink2);border:2.5px solid var(--line)">
+    <div class="stars"><i data-i="star"></i><i data-i="star"></i><i data-i="star"></i><i data-i="star"></i><i data-i="star"></i></div>
+    <q>Estoy muy contento por la página, quedó como quería y lo mejor es que he podido modificar algunos contenidos.</q>
+    <div class="who">— Yahir Salazar, Kenpo Karate Power Evolution</div><div class="u"><i data-i="globe"></i>kenpokaratepowerevolution.life</div>
+  </div>
+  <div class="quote" style="position:absolute;left:72px;right:72px;top:930px;background:var(--ink2);border:2.5px solid var(--line)">
+    <div class="stars"><i data-i="star"></i><i data-i="star"></i><i data-i="star"></i><i data-i="star"></i><i data-i="star"></i></div>
+    <q>Muy buena la página, me encantó.</q>
+    <div class="who">— Al Paso Food Truck</div><div class="u"><i data-i="globe"></i>alpasofoodtruck.shop</div>
+  </div>
+</section>
+
+<!-- 09 Precios -->
+<section class="art light" data-name="post-09-precios">
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios<span class="r">Precios en CLP</span></div>
+  <h2 class="disp" style="position:absolute;left:68px;top:180px;font-size:140px">Precios <span style="color:var(--red)">claros.</span></h2>
+  <div class="plist" style="position:absolute;left:72px;right:72px;top:350px">
+    <div class="row" style="--c:#7c86ff"><span class="ic"><i data-i="bot"></i></span><div><b>Bots de Discord</b><small>Con hosting $50.000</small></div><div class="p"><em>desde</em>$40.000</div></div>
+    <div class="row" style="--c:#ffd43b"><span class="ic"><i data-i="globe"></i></span><div><b>Páginas Web</b><small>Con dominio anual $85.000</small></div><div class="p"><em>desde</em>$70.000</div></div>
+    <div class="row" style="--c:#ff9f45"><span class="ic"><i data-i="film"></i></span><div><b>Reels</b><small>Creación $15.000</small></div><div class="p"><em>desde</em>$10.000</div></div>
+    <div class="row" style="--c:#ff5a5f"><span class="ic"><i data-i="play"></i></span><div><b>Videos YouTube</b><small>Creación $30.000</small></div><div class="p"><em>desde</em>$20.000</div></div>
+    <div class="row cot" style="--c:#7ddfb0"><span class="ic"><i data-i="gamepad-2"></i></span><div><b>Apps y juegos</b><small>iPhone · Android · Windows</small></div><div class="p">A cotización</div></div>
+  </div>
+  <div class="bot"><span class="wa"><i data-i="whatsapp"></i>+56 9 2227 4083</span><span class="r">aurorastudios.shop</span></div>
+</section>
+
+<!-- 10 Contacto -->
+<section class="art" data-name="post-10-contacto">
+  <div class="glow" style="left:-200px;top:780px;width:1480px;height:1480px;background:radial-gradient(closest-side,rgba(255,212,59,.35),transparent)"></div>
+  <div class="sun" data-stripes style="left:140px;top:1020px;width:800px;height:800px"></div>
+  <div class="top"><span class="logo" data-logo></span>Aurora Studios</div>
+  <h2 class="disp" style="position:absolute;left:68px;top:200px;font-size:200px">Cotiza tu<br><span style="color:var(--red)">proyecto.</span></h2>
+  <div style="position:absolute;left:72px;top:620px;right:72px;height:150px;border-radius:99px;background:var(--wa);color:#fff;display:flex;align-items:center;gap:26px;padding:0 40px;box-shadow:0 24px 50px rgba(37,211,102,.35)"><i data-i="whatsapp" style="font-size:80px"></i><div><div style="font:700 24px Inter;letter-spacing:.14em;text-transform:uppercase">Escríbenos por WhatsApp</div><div style="font-size:62px;font-weight:800;font-stretch:86%;color:#06351a">+56 9 2227 4083</div></div></div>
+  <div style="position:absolute;left:72px;right:72px;top:800px;display:flex;gap:18px">
+    <div style="flex:1;height:104px;border-radius:30px;border:2.5px solid var(--ink);display:flex;align-items:center;gap:16px;padding:0 26px;font-size:31px;font-weight:800;font-stretch:92%"><i data-i="instagram" style="font-size:42px"></i>@aurorastudioscl</div>
+    <div style="flex:1;height:104px;border-radius:30px;border:2.5px solid var(--ink);display:flex;align-items:center;gap:16px;padding:0 26px;font-size:31px;font-weight:800;font-stretch:92%"><i data-i="globe" style="font-size:42px"></i>aurorastudios.shop</div>
+  </div>
+  <div style="position:absolute;left:72px;top:940px;display:flex;align-items:center;gap:12px;font:600 28px Inter;color:rgba(20,19,25,.7)"><i data-i="map-pin" style="color:var(--red);font-size:32px"></i>V Región de Valparaíso, Chile</div>
+</section>
+
+<!-- Historias 1080×1920 -->
+<section class="art story dark" data-name="historia-01-cotiza">
+  <div class="glow" style="left:-300px;top:200px;width:1600px;height:1600px;background:radial-gradient(closest-side,rgba(255,212,59,.3),transparent)"></div>
+  <div class="top" style="top:200px"><span class="logo" data-logo></span>Aurora Studios</div>
+  <h2 class="disp" style="position:absolute;left:68px;top:400px;font-size:186px">¿Tienes<br>una idea?<br><span style="color:var(--sun)">La hacemos<br>realidad.</span></h2>
+  <div style="position:absolute;left:72px;top:1260px;font:600 38px/1.35 Inter;color:var(--muted);width:900px">Páginas web, bots, Reels, videos para YouTube, apps y juegos.</div>
+  <div style="position:absolute;left:72px;right:72px;top:1460px;height:160px;border-radius:99px;background:var(--wa);color:#fff;display:flex;align-items:center;gap:26px;padding:0 40px"><i data-i="whatsapp" style="font-size:84px"></i><div><div style="font:700 26px Inter;letter-spacing:.14em;text-transform:uppercase">Cotiza por WhatsApp</div><div style="font-size:66px;font-weight:800;font-stretch:86%;color:#06351a">+56 9 2227 4083</div></div></div>
+  <div style="position:absolute;left:0;right:0;top:1680px;text-align:center;font:700 32px Inter;color:var(--muted)">aurorastudios.shop · @aurorastudioscl</div>
+</section>
+
+<section class="art story" data-name="historia-02-nuevo-apps-juegos" style="background:var(--sun)">
+  <div class="top" style="top:200px"><span class="logo" data-logo></span>Aurora Studios</div>
+  <div style="position:absolute;right:80px;top:330px;width:260px;height:260px;border-radius:50%;background:var(--ink);color:var(--sun);display:grid;place-items:center;font-size:58px;font-weight:800;font-stretch:80%;transform:rotate(-12deg)">NUEVO</div>
+  <div style="position:absolute;left:72px;top:470px;font-size:80px;font-weight:700;font-stretch:90%">Ahora también:</div>
+  <h2 class="disp" style="position:absolute;left:66px;top:570px;font-size:250px">Apps<br>y juegos.</h2>
+  <div style="position:absolute;left:72px;top:1100px;display:grid;grid-template-columns:1fr 1fr;gap:22px;width:936px">
+    <div style="height:200px;border-radius:44px;background:var(--ink);color:var(--cream);display:flex;align-items:center;gap:22px;padding:0 36px;font-size:46px;font-weight:800;font-stretch:88%"><i data-i="apple" style="font-size:80px"></i>iPhone</div>
+    <div style="height:200px;border-radius:44px;background:var(--ink);color:var(--cream);display:flex;align-items:center;gap:22px;padding:0 36px;font-size:46px;font-weight:800;font-stretch:88%"><i data-i="android" style="font-size:80px"></i>Android</div>
+    <div style="height:200px;border-radius:44px;background:var(--ink);color:var(--cream);display:flex;align-items:center;gap:22px;padding:0 36px;font-size:46px;font-weight:800;font-stretch:88%"><i data-i="windows" style="font-size:80px"></i>Windows</div>
+    <div style="height:200px;border-radius:44px;background:var(--ink);color:var(--cream);display:flex;align-items:center;gap:22px;padding:0 36px;font-size:46px;font-weight:800;font-stretch:88%"><i data-i="gamepad-2" style="font-size:80px"></i>Juegos</div>
+  </div>
+  <div style="position:absolute;left:72px;top:1580px;display:flex;align-items:center;gap:18px;font-size:72px;font-weight:800;font-stretch:86%"><i data-i="whatsapp" style="color:#128c4a;font-size:76px"></i>Todo a cotización</div>
+</section>
+
+<section class="art story light" data-name="historia-03-precios">
+  <div class="top" style="top:200px"><span class="logo" data-logo></span>Aurora Studios</div>
+  <h2 class="disp" style="position:absolute;left:68px;top:340px;font-size:170px">Precios<br><span style="color:var(--red)">claros.</span></h2>
+  <div class="plist" style="position:absolute;left:72px;right:72px;top:720px">
+    <div class="row" style="--c:#7c86ff"><span class="ic"><i data-i="bot"></i></span><div><b>Bots de Discord</b></div><div class="p"><em>desde</em>$40.000</div></div>
+    <div class="row" style="--c:#ffd43b"><span class="ic"><i data-i="globe"></i></span><div><b>Páginas Web</b></div><div class="p"><em>desde</em>$70.000</div></div>
+    <div class="row" style="--c:#ff9f45"><span class="ic"><i data-i="film"></i></span><div><b>Reels</b></div><div class="p"><em>desde</em>$10.000</div></div>
+    <div class="row" style="--c:#ff5a5f"><span class="ic"><i data-i="play"></i></span><div><b>Videos YouTube</b></div><div class="p"><em>desde</em>$20.000</div></div>
+    <div class="row cot" style="--c:#7ddfb0"><span class="ic"><i data-i="gamepad-2"></i></span><div><b>Apps y juegos</b></div><div class="p">A cotización</div></div>
+  </div>
+  <div style="position:absolute;left:72px;right:72px;top:1560px;height:140px;border-radius:99px;background:var(--wa);color:#fff;display:flex;align-items:center;justify-content:center;gap:22px;font-size:56px;font-weight:800;font-stretch:86%"><i data-i="whatsapp" style="font-size:66px"></i>+56 9 2227 4083</div>
+</section>
+
+<script src="../assets/icons.js"></script>
+<script>
+ICONS.windows = { brand: true, body: '<path d="M3 3h8.5v8.5H3zM12.5 3H21v8.5h-8.5zM3 12.5h8.5V21H3zM12.5 12.5H21V21h-8.5z"/>' };
+function ic(n, cls) { const d = ICONS[n]; return d.brand ? `<svg class="i ${cls}" viewBox="0 0 24 24" fill="currentColor">${d.body}</svg>` : `<svg class="i ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${d.body}</svg>`; }
+document.querySelectorAll("i[data-i]").forEach((el) => { const st = el.getAttribute("style") || ""; const tmp = document.createElement("span"); tmp.innerHTML = ic(el.dataset.i, el.className); const svg = tmp.firstChild; if (st) svg.setAttribute("style", st + ";width:1em;height:1em"); el.replaceWith(svg); });
+const LOGO = `<svg viewBox="0 0 100 100"><rect width="100" height="100" rx="24" fill="#15141b"/><rect x="1" y="1" width="98" height="98" rx="23" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="2"/><g transform="translate(50 50) scale(0.6) translate(-50 -50)"><path d="M16.5 81L50 15l33.5 66" fill="none" stroke="#fdfcf9" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/><path d="M33.5 89a16.5 16.5 0 0 1 33 0z" fill="#ffd43b"/></g></svg>`;
+document.querySelectorAll("[data-logo]").forEach((el) => (el.innerHTML = LOGO));
+document.querySelectorAll("[data-stripes]").forEach((el) => { const h = el.offsetHeight; [0.3, 0.38, 0.45, 0.52, 0.6].forEach((u, k) => { const i = document.createElement("i"); i.style.top = (u * h) + "px"; i.style.height = (6 + k * 7) + "px"; el.appendChild(i); }); });
+document.fonts.ready.then(() => (window.READY = true));
+</script>
+</body>
+</html>

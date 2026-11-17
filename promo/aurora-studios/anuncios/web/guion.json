@@ -1,0 +1,100 @@
+{
+ "_fuentes": "Lindgaard et al. (2006), Carleton University: 'Attention web designers: You have 50 milliseconds to make a good first impression!'. Google/DoubleClick (2016): el 53 % de las visitas desde el celular se abandonan si la página tarda más de 3 s en cargar. Un parpadeo dura entre 100 y 400 ms.",
+ "lineas": [
+  {
+   "id": "h1",
+   "texto": "¿Sabías que alguien decide",
+   "pausa": 0.03
+  },
+  {
+   "id": "h2",
+   "texto": "si le gusta tu página web",
+   "pausa": 0.03
+  },
+  {
+   "id": "h3",
+   "texto": "en solo 50 milisegundos?",
+   "voz": "en solo cincuenta milisegundos?",
+   "pausa": 0.3
+  },
+  {
+   "id": "h4",
+   "texto": "Es menos de lo que dura un parpadeo.",
+   "pausa": 0.3
+  },
+  {
+   "id": "h5",
+   "texto": "Lo descubrió un estudio en Canadá,",
+   "pausa": 0.03
+  },
+  {
+   "id": "h6",
+   "texto": "y estudios posteriores lo confirmaron.",
+   "pausa": 0.3
+  },
+  {
+   "id": "h7",
+   "texto": "Y si tu página tarda más de 3 segundos en cargar,",
+   "voz": "Y si tu página tarda más de tres segundos en cargar,",
+   "pausa": 0.05
+  },
+  {
+   "id": "h8",
+   "texto": "más de la mitad de las visitas desde el celular",
+   "pausa": 0.03
+  },
+  {
+   "id": "h9",
+   "texto": "se van antes de verla.",
+   "pausa": 0.3
+  },
+  {
+   "id": "h10",
+   "texto": "Tu página es tu primera impresión.",
+   "pausa": 0.5
+  },
+  {
+   "id": "p1",
+   "texto": "Aurora Studios",
+   "voz": "Aurora Estudios.",
+   "pausa": 0.1
+  },
+  {
+   "id": "p2",
+   "texto": "hace páginas web rápidas,",
+   "pausa": 0.03
+  },
+  {
+   "id": "p3",
+   "texto": "modernas y adaptadas a celulares,",
+   "pausa": 0.03
+  },
+  {
+   "id": "p4",
+   "texto": "con WhatsApp directo,",
+   "pausa": 0.03
+  },
+  {
+   "id": "p5",
+   "texto": "desde $70.000.",
+   "voz": "desde setenta mil pesos.",
+   "pausa": 0.25
+  },
+  {
+   "id": "p6",
+   "texto": "Si estás interesado,",
+   "pausa": 0.03
+  },
+  {
+   "id": "p7",
+   "texto": "mándanos un mensaje.",
+   "pausa": 0.2
+  },
+  {
+   "id": "p8",
+   "texto": "(no respondemos en 50 ms… pero casi)",
+   "voz": "No respondemos en cincuenta milisegundos… pero casi.",
+   "pausa": 1.5
+  }
+ ]
+}

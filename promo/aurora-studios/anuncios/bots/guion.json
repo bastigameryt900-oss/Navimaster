@@ -1,0 +1,24 @@
+{
+  "_fuentes": "ELIZA fue creada por Joseph Weizenbaum en el MIT (publicada en 1966); su guion DOCTOR imitaba a un psicoterapeuta. Funcionaba en un IBM 7094 con el sistema de tiempo compartido CTSS. La anécdota de la secretaria aparece en su libro 'Computer Power and Human Reason' (1976).",
+  "lineas": [
+    {"id": "h1", "texto": "El primer chatbot de la historia", "pausa": 0.03},
+    {"id": "h2", "texto": "nació en 1966", "voz": "nació en mil novecientos sesenta y seis", "pausa": 0.03},
+    {"id": "h3", "texto": "y se llamaba ELIZA.", "voz": "y se llamaba Elisa.", "pausa": 0.3},
+    {"id": "h4", "texto": "Vivía en un computador", "pausa": 0.03},
+    {"id": "h5", "texto": "del tamaño de una habitación", "pausa": 0.03},
+    {"id": "h6", "texto": "y conversaba como un psicoterapeuta.", "pausa": 0.3},
+    {"id": "h7", "texto": "Era tan convincente", "pausa": 0.03},
+    {"id": "h8", "texto": "que la secretaria de su creador", "pausa": 0.03},
+    {"id": "h9", "texto": "le pidió que saliera de la sala", "pausa": 0.03},
+    {"id": "h10", "texto": "para hablar a solas con ella.", "pausa": 0.35},
+    {"id": "h11", "texto": "Hoy, un bot puede hacer mucho más.", "voz": "Hoy, un bot puede hacer mucho más.", "pausa": 0.5},
+    {"id": "p1", "texto": "Aurora Studios", "voz": "Aurora Estudios.", "pausa": 0.1},
+    {"id": "p2", "texto": "crea bots de Discord a medida:", "voz": "crea bots de Discord a medida.", "pausa": 0.1},
+    {"id": "p3", "texto": "moderación, roles y bienvenidas,", "pausa": 0.03},
+    {"id": "p4", "texto": "funcionando las 24 horas,", "voz": "funcionando las veinticuatro horas,", "pausa": 0.03},
+    {"id": "p5", "texto": "desde $40.000.", "voz": "desde cuarenta mil pesos.", "pausa": 0.25},
+    {"id": "p6", "texto": "Si estás interesado,", "pausa": 0.03},
+    {"id": "p7", "texto": "mándanos un mensaje.", "pausa": 0.2},
+    {"id": "p8", "texto": "(te responde una persona, no ELIZA)", "voz": "Te responde una persona, no Elisa.", "pausa": 1.5}
+  ]
+}

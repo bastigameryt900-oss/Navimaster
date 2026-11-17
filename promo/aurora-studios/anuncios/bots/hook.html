@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<title>Aurora Studios — ELIZA, el primer chatbot</title>
+<link rel="stylesheet" href="../lib/base.css">
+<style>
+#ovYear{top:220px}
+#ovYear b{font-size:260px;color:#ffd43b}
+#chipMit{top:230px}
+#chipW{top:230px}
+</style>
+<script type="importmap">{"imports":{"three":"../../tiktok/assets/three.module.min.js"}}</script>
+</head>
+<body>
+<div id="stage">
+  <div id="vig"></div>
+  <div class="ov big" id="ovYear"><b>1966</b><span>MIT · Estados Unidos</span></div>
+  <div class="ov chip" id="chipMit">Del tamaño de una habitación</div>
+  <div class="ov chip" id="chipW">La secretaria de Joseph Weizenbaum</div>
+  <div id="cap"><span id="capT"></span></div>
+  <div id="flash"></div>
+</div>
+<script type="module">
+import { THREE, RoundedBoxGeometry, W, H, $, clamp, lerp, seg, eio, eo, ei, back, V3, rng, L, CUT, END, post, skyDome, envFrom, glowSprite, GLOW, canvasTex, makePhone, makePerson, start } from "../lib/base.js";
+const MONO = "DejaVu Sans Mono, monospace";
+
+// =====================================================================
+// Sala de computadores de 1966 (escenas A, B y C)
+// =====================================================================
+const ROOM = (() => {
+  const s = new THREE.Scene();
+  s.background = new THREE.Color("#d9d4c6");
+  s.environment = envFrom("#ffffff", "#e8e2d2", "#8a8475");
+  s.fog = new THREE.Fog("#d9d4c6", 14, 40);
+  s.add(new THREE.HemisphereLight("#fffaf0", "#7a7363", 1.4));
+  const key = new THREE.DirectionalLight("#fff6e6", 1.8); key.position.set(4, 10, 6); key.castShadow = true; key.shadow.mapSize.set(2048, 2048);
+  Object.assign(key.shadow.camera, { left: -14, right: 14, top: 14, bottom: -14, near: 1, far: 40 }); s.add(key);
+  // piso de baldosas
+  const fc = canvasTex(512, 512); fc.x.fillStyle = "#e9e6dc"; fc.x.fillRect(0, 0, 512, 512); fc.x.strokeStyle = "#c9c4b6"; fc.x.lineWidth = 6; fc.x.strokeRect(0, 0, 512, 512);
+  fc.x.fillStyle = "#dedad0"; fc.x.fillRect(0, 0, 256, 256); fc.x.fillRect(256, 256, 256, 256); fc.tex.wrapS = fc.tex.wrapT = THREE.RepeatWrapping; fc.tex.repeat.set(20, 20); fc.tex.needsUpdate = true;
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ map: fc.tex, roughness: 0.7 })); floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; s.add(floor);
+  const wallM = new THREE.MeshStandardMaterial({ color: "#e7e0cc", roughness: 0.95 });
+  const back = new THREE.Mesh(new THREE.PlaneGeometry(40, 8), wallM); back.position.set(0, 4, -9); s.add(back);
+  const side = new THREE.Mesh(new THREE.PlaneGeometry(40, 8), wallM); side.rotation.y = Math.PI / 2; side.position.set(-9, 4, 0); s.add(side);
+  for (let i = 0; i < 6; i++) { const l = new THREE.Mesh(new THREE.PlaneGeometry(1.2, 3), new THREE.MeshBasicMaterial({ color: new THREE.Color("#fffdf4").multiplyScalar(1.4) })); l.rotation.x = Math.PI / 2; l.position.set(-6 + (i % 3) * 6, 6, -5 + Math.floor(i / 3) * 6); s.add(l); }
+  const ceil = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ color: "#f2eee4" })); ceil.rotation.x = Math.PI / 2; ceil.position.y = 6.05; s.add(ceil);
+  // paneles de luces (4 variantes que se alternan)
+  const R = rng(66);
+  const panelTex = [0, 1, 2, 3].map((v) => { const c = canvasTex(256, 256); c.x.fillStyle = "#33404c"; c.x.fillRect(0, 0, 256, 256); for (let i = 0; i < 8; i++) for (let j = 0; j < 8; j++) { const on = R() < 0.45; c.x.fillStyle = on ? ["#ffcf5a", "#ff6b4a", "#f4f0e0"][(i + j + v) % 3] : "#4b5560"; c.x.beginPath(); c.x.arc(20 + i * 31, 20 + j * 31, 9, 0, 7); c.x.fill(); } c.tex.needsUpdate = true; return c.tex; });
+  const panelMats = [];
+  const cabM = new THREE.MeshStandardMaterial({ color: "#c7ccd2", roughness: 0.5, metalness: 0.3 });
+  const frontM = new THREE.MeshStandardMaterial({ color: "#5d7790", roughness: 0.5, metalness: 0.2 });
+  const reelM = new THREE.MeshStandardMaterial({ color: "#2a2a2e", roughness: 0.4 });
+  const ringM = new THREE.MeshStandardMaterial({ color: "#d9dde2", metalness: 0.9, roughness: 0.25 });
+  const reels = [];
+  function cabinet(x, z, ry, kind) {
+    const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry;
+    const box = new THREE.Mesh(new RoundedBoxGeometry(1.1, 2.2, 0.8, 2, 0.04), cabM); box.position.y = 1.1; box.castShadow = box.receiveShadow = true; g.add(box);
+    const fr = new THREE.Mesh(new THREE.PlaneGeometry(0.95, 1.95), frontM); fr.position.set(0, 1.1, 0.405); g.add(fr);
+    if (kind === "tape") {
+      for (let k = 0; k < 2; k++) { const r = new THREE.Group(); r.position.set(0, 1.62 - k * 0.6, 0.42);
+        const d = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.24, 0.03, 32), reelM); d.rotation.x = Math.PI / 2; r.add(d);
+        const ring = new THREE.Mesh(new THREE.TorusGeometry(0.24, 0.02, 8, 32), ringM); r.add(ring);
+        for (let sp = 0; sp < 3; sp++) { const b = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.4, 0.035), ringM); b.rotation.z = (sp / 3) * Math.PI; r.add(b); }
+        g.add(r); reels.push({ r, sp: 2 + R() * 4, dir: k ? -1 : 1 }); }
+      const win = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 0.2), new THREE.MeshStandardMaterial({ color: "#20262c", roughness: 0.2 })); win.position.set(0, 0.6, 0.41); g.add(win);
+    } else {
+      const m = new THREE.MeshBasicMaterial({ map: panelTex[0] }); panelMats.push({ m, o: Math.floor(R() * 4) });
+      const p = new THREE.Mesh(new THREE.PlaneGeometry(0.8, 0.8), m); p.position.set(0, 1.5, 0.41); g.add(p);
+      for (let i = 0; i < 4; i++) { const sw = new THREE.Mesh(new THREE.BoxGeometry(0.06, 0.12, 0.05), ringM); sw.position.set(-0.27 + i * 0.18, 0.85, 0.42); g.add(sw); }
+    }
+    s.add(g);
+  }
+  for (let i = 0; i < 9; i++) { cabinet(-6 + i * 1.2, -7.5, 0, i % 3 === 1 ? "panel" : "tape"); }
+  for (let i = 0; i < 6; i++) { cabinet(-8.4, -5 + i * 1.2, Math.PI / 2, i % 2 ? "panel" : "tape"); }
+  for (let i = 0; i < 6; i++) { cabinet(-4 + i * 1.2, -3.6, 0, i % 3 === 0 ? "panel" : "tape"); }
+  // consola principal
+  const consoleM = new THREE.Mesh(new RoundedBoxGeometry(3.2, 1.0, 1.0, 2, 0.05), new THREE.MeshStandardMaterial({ color: "#8a9aa8", roughness: 0.5, metalness: 0.2 })); consoleM.position.set(3.5, 0.5, -6.2); consoleM.castShadow = true; s.add(consoleM);
+  const cp = new THREE.Mesh(new THREE.PlaneGeometry(2.8, 0.6), new THREE.MeshBasicMaterial({ map: panelTex[1] })); cp.position.set(3.5, 0.75, -5.69); s.add(cp); panelMats.push({ m: cp.material, o: 1 });
+  // mesa del teletipo
+  const desk = new THREE.Mesh(new RoundedBoxGeometry(2.2, 0.08, 1.1, 2, 0.02), new THREE.MeshStandardMaterial({ color: "#7a5a3c", roughness: 0.6 })); desk.position.set(2.2, 0.8, 0.4); desk.castShadow = desk.receiveShadow = true; s.add(desk);
+  for (const [lx, lz] of [[1.2, -0.05], [3.2, -0.05], [1.2, 0.85], [3.2, 0.85]]) { const leg = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.8), ringM); leg.position.set(lx, 0.4, lz); s.add(leg); }
+  // teletipo
+  const tty = new THREE.Group(); tty.position.set(2.2, 0.84, 0.35); s.add(tty);
+  const ttyM = new THREE.MeshStandardMaterial({ color: "#d8cfb8", roughness: 0.55 });
+  const tb = new THREE.Mesh(new RoundedBoxGeometry(0.9, 0.3, 0.6, 3, 0.06), ttyM); tb.position.y = 0.15; tb.castShadow = true; tty.add(tb);
+  const kb = new THREE.Mesh(new RoundedBoxGeometry(0.8, 0.06, 0.25, 2, 0.02), new THREE.MeshStandardMaterial({ color: "#3b3a38", roughness: 0.6 })); kb.position.set(0, 0.29, 0.2); kb.rotation.x = 0.2; tty.add(kb);
+  const roll = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.75, 24), new THREE.MeshStandardMaterial({ color: "#2b2b2b" })); roll.rotation.z = Math.PI / 2; roll.position.set(0, 0.36, -0.12); tty.add(roll);
+  const paperCt = canvasTex(700, 1400);
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 1.4), new THREE.MeshStandardMaterial({ map: paperCt.tex, roughness: 0.9, side: THREE.DoubleSide }));
+  paper.position.set(0, 1.02, -0.13); paper.rotation.x = -0.12; tty.add(paper);
+  let paperKey = "";
+  function drawPaper(lines, big) {
+    const key = JSON.stringify([lines, big]); if (key === paperKey) return; paperKey = key;
+    const x = paperCt.x; x.fillStyle = "#f6f1e4"; x.fillRect(0, 0, 700, 1400);
+    x.fillStyle = "rgba(120,160,120,.15)"; for (let i = 0; i < 14; i++) x.fillRect(0, i * 100 + 50, 700, 50);
+    x.fillStyle = "#c9c2b0"; for (let i = 0; i < 26; i++) { x.beginPath(); x.arc(16, 27 + i * 54, 7, 0, 7); x.fill(); x.beginPath(); x.arc(684, 27 + i * 54, 7, 0, 7); x.fill(); }
+    if (big) { x.fillStyle = "#1b1a18"; x.font = `700 170px ${MONO}`; x.fillText(big, 70, 1230); }
+    x.font = `700 38px ${MONO}`;
+    let y = 1330 - lines.length * 56;
+    if (big) y = 1060 - lines.length * 56;
+    lines.forEach(([txt, me]) => { x.fillStyle = me ? "#1b1a18" : "#7a2a1a"; x.fillText(txt, 50, y); y += 56; });
+    paperCt.tex.needsUpdate = true;
+  }
+  // personas
+  const sec = makePerson("#c0392b", "#e0ac69"); sec.position.set(2.2, 0, 1.55); sec.rotation.y = Math.PI; s.add(sec);
+  const bun = new THREE.Mesh(new THREE.SphereGeometry(0.28, 20, 14, 0, Math.PI * 2, 0, Math.PI / 1.8), new THREE.MeshStandardMaterial({ color: "#3a2416", roughness: 0.8 })); bun.position.y = 1.6; sec.add(bun);
+  const bun2 = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 10), bun.material); bun2.position.set(0, 1.72, 0.22); sec.add(bun2);
+  const chair = new THREE.Mesh(new RoundedBoxGeometry(0.6, 0.08, 0.6, 2, 0.02), new THREE.MeshStandardMaterial({ color: "#3d4a57" })); chair.position.set(2.2, 0.5, 1.5); s.add(chair);
+  const prof = makePerson("#3b4351", "#f1c27d"); prof.position.set(3.4, 0, 2.2); prof.rotation.y = Math.PI * 0.85; s.add(prof);
+  const hair = new THREE.Mesh(new THREE.SphereGeometry(0.27, 20, 14, 0, Math.PI * 2, 0, Math.PI / 2.4), new THREE.MeshStandardMaterial({ color: "#6b5b4b", roughness: 0.8 })); hair.position.y = 1.6; prof.add(hair);
+  const glasses = new THREE.Mesh(new THREE.TorusGeometry(0.07, 0.012, 8, 20), new THREE.MeshStandardMaterial({ color: "#111" }));
+  [-0.09, 0.09].forEach((gx) => { const g2 = glasses.clone(); g2.position.set(gx, 1.58, 0.24); prof.add(g2); });
+  // puerta
+  const frame = new THREE.Mesh(new THREE.BoxGeometry(1.4, 2.6, 0.2), new THREE.MeshStandardMaterial({ color: "#8a7a62" })); frame.position.set(6.5, 1.3, 3.2); frame.rotation.y = -Math.PI / 2; s.add(frame);
+  const hole = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 2.35), new THREE.MeshBasicMaterial({ color: "#2b2620" })); hole.rotation.y = -Math.PI / 2; hole.position.set(6.39, 1.18, 3.2); s.add(hole);
+  const doorG = new THREE.Group(); doorG.position.set(6.37, 0, 2.65); s.add(doorG);
+  const door = new THREE.Mesh(new RoundedBoxGeometry(0.06, 2.35, 1.1, 2, 0.02), new THREE.MeshStandardMaterial({ color: "#a0855e", roughness: 0.6 })); door.position.set(0, 1.18, 0.55); doorG.add(door);
+  const wall2 = new THREE.Mesh(new THREE.PlaneGeometry(30, 8), wallM); wall2.rotation.y = -Math.PI / 2; wall2.position.set(6.6, 4, 0); s.add(wall2);
+  function tick(t) {
+    reels.forEach((o) => (o.r.rotation.z = t * o.sp * o.dir));
+    const f = Math.floor(t * 5);
+    panelMats.forEach((p) => { p.m.map = panelTex[(f + p.o) % 4]; });
+  }
+  return { s, tick, drawPaper, sec, prof, doorG, tty };
+})();
+
+const camR = new THREE.PerspectiveCamera(46, W / H, 0.05, 100);
+
+// A — recorrido por la sala + "1966"
+const A = { update(t, dur) {
+  ROOM.tick(t);
+  const k = eio(seg(t, 0, dur));
+  camR.fov = 46; camR.updateProjectionMatrix();
+  camR.position.set(lerp(-6.8, -3.2, k), lerp(1.3, 1.6, k), lerp(-4.4, -5.6, k));
+  camR.lookAt(lerp(-2, 2, k), 1.4, -7.5);
+  const ty = L.h2.ini;
+  $("#ovYear").style.opacity = seg(t, ty, ty + 0.2); $("#ovYear").style.transform = `scale(${lerp(1.3, 1, eo(seg(t, ty, ty + 0.4)))})`;
+  ROOM.drawPaper([], null);
+  return { s: ROOM.s, cam: camR };
+} };
+// A2 — el teletipo imprime ELIZA
+const A2 = { update(t, dur) {
+  ROOM.tick(t + 4);
+  const n = Math.min(5, Math.floor(seg(t, 0.1, 0.9) * 6));
+  ROOM.drawPaper([], "ELIZA".slice(0, n));
+  const k = eo(seg(t, 0, dur));
+  camR.fov = 34; camR.updateProjectionMatrix();
+  camR.position.set(2.2 + lerp(0.2, 0.0, k), lerp(1.65, 1.6, k), lerp(2.8, 2.45, k)); camR.lookAt(2.2, 1.42, 0.2);
+  ROOM.sec.visible = false; ROOM.prof.visible = false;
+  return { s: ROOM.s, cam: camR };
+} };
+// B — plano general: del tamaño de una habitación
+const B = { update(t, dur) {
+  ROOM.tick(t + 6);
+  ROOM.sec.visible = false; ROOM.prof.visible = true; ROOM.prof.position.set(-1.5, 0, -2.2); ROOM.prof.rotation.y = -0.4;
+  ROOM.drawPaper([], "ELIZA");
+  const k = eio(seg(t, 0, dur));
+  camR.fov = 52; camR.updateProjectionMatrix();
+  camR.position.set(lerp(5.5, 6.0, k), lerp(4.6, 5.4, k), lerp(5.5, 7.0, k)); camR.lookAt(-1.5, 0.9, -4.5);
+  $("#chipMit").style.opacity = seg(t, L.h5.ini - CUT.B, L.h5.ini - CUT.B + 0.2);
+  return { s: ROOM.s, cam: camR };
+} };
+// B2 — conversación impresa
+const CONV = [["> ME SIENTO UN POCO TRISTE.", 1], ["¿POR QUÉ TE SIENTES TRISTE?", 0], ["> CREO QUE NADIE ME ENTIENDE.", 1], ["CUÉNTAME MÁS SOBRE ESO.", 0]];
+const B2 = { update(t, dur) {
+  ROOM.tick(t + 9);
+  const n = Math.min(4, Math.floor(seg(t, 0.1, 2.1) * 4) + (t > 0.1 ? 1 : 0));
+  const lines = CONV.slice(0, n).map(([a, b], i) => { if (i === n - 1) { const c = Math.floor(seg(t, 0.1 + (n - 1) * 0.5, 0.45 + (n - 1) * 0.5) * a.length); return [a.slice(0, Math.max(1, c)), b]; } return [a, b]; });
+  ROOM.drawPaper(lines, null);
+  ROOM.sec.visible = false; ROOM.prof.visible = false;
+  camR.fov = 30; camR.updateProjectionMatrix();
+  const k = eo(seg(t, 0, dur));
+  camR.position.set(2.2 + lerp(-0.08, 0.04, k), lerp(1.5, 1.45, k), lerp(2.95, 2.75, k)); camR.lookAt(2.2, 1.38, 0.2);
+  return { s: ROOM.s, cam: camR };
+} };
+// C — la secretaria le pide que salga
+const C = { update(t, dur) {
+  ROOM.tick(t + 11);
+  const { sec, prof, doorG } = ROOM;
+  sec.visible = prof.visible = true;
+  sec.position.set(2.2, 0, 1.55); sec.rotation.y = Math.PI;
+  const t8 = L.h8.ini - CUT.C, t9 = L.h9.ini - CUT.C, t10 = L.h10.ini - CUT.C;
+  // la secretaria se gira a hablarle y luego vuelve al teletipo
+  const look = seg(t, t9 - 0.3, t9) * (1 - seg(t, t10 - 0.1, t10 + 0.2));
+  sec.userData.head.rotation.y = lerp(0, 1.4, look);
+  sec.rotation.y = Math.PI + lerp(0, 0.4, look);
+  // el profesor camina a la puerta
+  const w = seg(t, t9 + 0.4, t10 - 0.1);
+  const p0 = V3(1.0, 0, 2.1), p1 = V3(5.8, 0, 3.2), p2 = V3(7.4, 0, 3.2);
+  const pp = w < 0.75 ? p0.clone().lerp(p1, eio(w / 0.75)) : p1.clone().lerp(p2, (w - 0.75) / 0.25);
+  prof.position.copy(pp); prof.position.y = Math.abs(Math.sin(w * 30)) * 0.05 * (w > 0 && w < 1 ? 1 : 0);
+  prof.rotation.y = w > 0 ? 1.35 : Math.PI * 0.8;
+  prof.visible = w < 0.98;
+  doorG.rotation.y = -lerp(0, 1.3, seg(t, t9 + 0.6, t9 + 1.0)) * (1 - seg(t, t10 - 0.15, t10 + 0.1));
+  const lines = t > t10 + 0.3 ? [["> AHORA ESTAMOS SOLAS.", 1], ["CUÉNTAME MÁS SOBRE ESO.", 0]] : [["> HOLA, ELIZA.", 1], ["HOLA. ¿CÓMO ESTÁS?", 0]];
+  ROOM.drawPaper(lines, null);
+  camR.fov = 50; camR.updateProjectionMatrix();
+  const k = eio(seg(t, t9, t10 + 0.3)), k0 = seg(t, 0, dur);
+  camR.position.set(lerp(-0.7, -0.2, k), lerp(2.7, 2.8, k), lerp(-2.1, -1.6, k) + k0 * 0.2); camR.lookAt(lerp(1.9, 4.6, k), 1.05, lerp(1.9, 2.6, k));
+  $("#chipW").style.opacity = seg(t, t8, t8 + 0.2) * (1 - seg(t, t9 + 0.4, t9 + 0.6));
+  return { s: ROOM.s, cam: camR };
+} };
+
+// =====================================================================
+// D — Hoy: un bot de Discord moderno
+// =====================================================================
+const D = (() => {
+  const s = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(40, W / H, 0.1, 100);
+  s.add(skyDome("#11102a", "#2a2560", "#0b0a1a", 50));
+  s.environment = envFrom("#8a92ff", "#2a2560", "#0b0a1a");
+  s.add(new THREE.HemisphereLight("#c9cdfb", "#141320", 1.2));
+  const key = new THREE.DirectionalLight("#ffffff", 2); key.position.set(2, 3, 5); s.add(key);
+  const phone = makePhone(); phone.scale.setScalar(2.1); s.add(phone);
+  const halo = glowSprite(GLOW, 9, 0x5865f2, 0.55); halo.position.z = -1; s.add(halo);
+  const R = rng(3), parts = [];
+  for (let i = 0; i < 30; i++) { const p = glowSprite(GLOW, 0.25 + R() * 0.3, [0x7c86ff, 0xffd43b, 0x7ddfb0][i % 3], 0.8); s.add(p); parts.push({ p, a: R() * 6.28, r: 1.6 + R() * 2.5, sp: 0.2 + R() * 0.5, y: (R() - 0.5) * 5 }); }
+  const scr = phone.userData.scr;
+  const MSGS = [["¡Bienvenida al servidor, Camila!", "#7c86ff", "+"], ["Rol asignado: Miembro", "#3fd17a", "✓"], ["Mensaje con spam eliminado", "#ff5a5f", "!"], ["Torneo hoy a las 20:00", "#ffd43b", "★"]];
+  let last = -1;
+  function draw(n) {
+    if (n === last) return; last = n;
+    const x = scr.x, w = 600, h = 1280;
+    x.fillStyle = "#313338"; x.fillRect(0, 0, w, h);
+    x.fillStyle = "#2b2d31"; x.fillRect(0, 0, w, 200);
+    x.fillStyle = "#000"; x.beginPath(); x.roundRect(230, 22, 140, 40, 20); x.fill();
+    x.fillStyle = "#80848e"; x.font = "600 56px Inter"; x.fillText("#", 34, 150); x.fillStyle = "#f2f3f5"; x.font = "700 40px Inter"; x.fillText("general", 80, 146);
+    let y = 260;
+    for (let i = 0; i < n; i++) {
+      const [txt, col, ic] = MSGS[i];
+      x.fillStyle = "#15141b"; x.beginPath(); x.arc(70, y + 34, 34, 0, 7); x.fill();
+      x.strokeStyle = "#fdfcf9"; x.lineWidth = 7; x.lineCap = "round"; x.beginPath(); x.moveTo(56, y + 46); x.lineTo(70, y + 18); x.lineTo(84, y + 46); x.stroke();
+      x.fillStyle = "#ffd43b"; x.beginPath(); x.arc(70, y + 54, 7, Math.PI, 0); x.fill();
+      x.fillStyle = "#f2f3f5"; x.font = "700 30px Inter"; x.fillText("Aurora Bot", 122, y + 26);
+      x.fillStyle = "#5865f2"; x.beginPath(); x.roundRect(290, y + 2, 66, 30, 6); x.fill(); x.fillStyle = "#fff"; x.font = "800 18px Inter"; x.fillText("APP", 304, y + 24);
+      x.fillStyle = "#2b2d31"; x.beginPath(); x.roundRect(122, y + 44, 450, 96, 14); x.fill();
+      x.fillStyle = col; x.fillRect(122, y + 44, 8, 96);
+      x.fillStyle = col; x.beginPath(); x.arc(170, y + 92, 22, 0, 7); x.fill();
+      x.fillStyle = "#15141b"; x.font = "800 26px Inter"; x.textAlign = "center"; x.fillText(ic, 170, y + 101); x.textAlign = "left";
+      x.fillStyle = "#dbdee1"; x.font = "600 25px Inter"; x.fillText(txt, 206, y + 101);
+      y += 175;
+    }
+    x.fillStyle = "#383a40"; x.beginPath(); x.roundRect(24, h - 130, w - 48, 86, 18); x.fill();
+    x.fillStyle = "#80848e"; x.font = "600 26px Inter"; x.fillText("Enviar mensaje a #general", 52, h - 76);
+    scr.tex.needsUpdate = true;
+  }
+  return { update(t, dur) {
+    const n = Math.min(4, Math.floor(seg(t, 0.3, 1.9) * 4) + (t > 0.3 ? 1 : 0));
+    draw(n);
+    phone.rotation.y = lerp(-0.5, 0.15, eo(seg(t, 0, dur))); phone.rotation.x = -0.05;
+    phone.position.y = Math.sin(t * 1.5) * 0.05;
+    parts.forEach((o) => { const a = o.a + t * o.sp; o.p.position.set(Math.cos(a) * o.r, o.y + Math.sin(t + o.a) * 0.2, Math.sin(a) * o.r - 1); });
+    cam.position.set(0, 0.2, lerp(9.5, 7.6, eo(seg(t, 0, dur)))); cam.lookAt(0, 0.1, 0);
+    $("#flash").style.opacity = Math.max(0, 0.7 - t * 3);
+    post.uniforms.uGlitch.value = Math.max(0, 0.5 - t * 2);
+    return { s, cam };
+  } };
+})();
+
+await start({ A, A2, B, B2, C, D }, ["#ovYear", "#chipMit", "#chipW"]);
+</script>
+</body>
+</html>

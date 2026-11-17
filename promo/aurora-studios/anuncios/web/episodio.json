@@ -1,0 +1,32 @@
+{
+  "nombre": "web-50ms",
+  "titulo": "Tu página tiene 50 milisegundos",
+  "escenas": { "A": "0", "B": "h4.ini-0.1", "C": "h5.ini-0.1", "D": "h7.ini-0.1", "E": "h10.ini-0.1" },
+  "fin_gancho": "p1.ini-0.2",
+  "cierre": [
+    { "de": "fin_gancho", "a": "p2.ini", "clips": [[1.45, 2.95]] },
+    { "de": "p2.ini", "a": "p5.ini", "clips": [[12.25, 15.2]] },
+    { "de": "p5.ini", "a": "p6.ini", "clips": [[14.9, 15.75]] },
+    { "de": "p6.ini", "a": "fin", "clips": [[50.3, 56.6]] }
+  ],
+  "cierre_subtitulo_top": 1625,
+  "cierre_ocultar": ".hud-wa",
+  "musica": {
+    "bpm": 104,
+    "acordes": [[57, 60, 64], [53, 57, 60], [48, 52, 55], [55, 59, 62]],
+    "raices": [45, 41, 48, 43],
+    "energia": [["h7.ini-0.1", "h10.fin"]],
+    "silencio": [["h3.ini", "h4.ini-0.1"]]
+  },
+  "sfx": [
+    { "tipo": "typing", "t": "0.3", "g": 0.25, "args": { "d": 1.6 } },
+    { "tipo": "ticks", "t": "h3.ini", "g": 0.3, "args": { "d": 0.6, "n": 12 } },
+    { "tipo": "boom", "t": "h3.ini+0.6", "g": 0.35 },
+    { "tipo": "whoosh", "t": "h4.ini+0.6", "g": 0.2, "args": { "d": 0.35, "lo": 200, "hi": 1500 } },
+    { "tipo": "pop", "t": ["h5.ini+0.1", "h6.ini+0.1", "h6.ini+0.4"], "g": 0.3 },
+    { "tipo": "tick", "t": ["h7.ini+0.95", "h7.ini+1.9", "h7.ini+2.85"], "g": 0.5 },
+    { "tipo": "buzz", "t": "h8.ini+0.3", "g": 0.3 },
+    { "tipo": "crowd", "t": "h9.ini", "g": 0.35, "args": { "d": 1.4 } },
+    { "tipo": "ding", "t": "h10.ini", "g": 0.45 }
+  ]
+}
