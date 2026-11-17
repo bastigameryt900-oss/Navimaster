@@ -128,6 +128,12 @@ if (mode === "sheet") {
   console.log("video listo en", ((Date.now() - t0) / 1000).toFixed(0), "s");
 } else if (mode === "final") {
   const name = path.join(OUT, `aurora-studios-${EP.nombre}.mp4`);
+  // Ajusta la ganancia para quedar en -14 LUFS (nivel de TikTok, Instagram y YouTube).
+  const { spawnSync } = await import("node:child_process");
+  const meas = spawnSync("ffmpeg", ["-hide_banner", "-i", path.join(OUT, "audio.wav"), "-af", "ebur128", "-f", "null", "-"], { encoding: "utf8" }).stderr;
+  const lufs = parseFloat([...meas.matchAll(/I:\s+(-?[\d.]+) LUFS/g)].pop()?.[1] ?? "-14");
+  EP.ganancia_db = EP.ganancia_db ?? Math.min(0, -14 - lufs);
+  console.log("loudness", lufs, "LUFS -> ganancia", EP.ganancia_db.toFixed(1), "dB");
   await run("ffmpeg", ["-y", "-loglevel", "error", "-i", path.join(OUT, "video-sin-audio.mp4"), "-i", path.join(OUT, "audio.wav"), "-map", "0:v", "-map", "1:a",
     "-vf", "hqdn3d=1.5:1.5:4:4", "-c:v", "libx264", "-preset", "slow", "-crf", "20", "-maxrate", "10M", "-bufsize", "20M", "-pix_fmt", "yuv420p",
     "-c:a", "aac", "-b:a", "192k", "-af", `volume=${EP.ganancia_db ?? -1.3}dB`, "-shortest", "-movflags", "+faststart", name]);
