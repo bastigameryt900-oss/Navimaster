@@ -19,7 +19,6 @@ Publicaciones para Instagram (1080×1350) e historias (1080×1920), con la marca
 | `historia-02-nuevo-apps-juegos.png` | Anuncio de apps y juegos |
 | `historia-03-precios.png` | Precios en formato historia |
 | `portada-video-principal.png` | Portada (miniatura) del video principal para TikTok / Reels; lo importante queda dentro del recorte 4:5 de la grilla |
-
 | `portada-cables.png` | Portada del anuncio "¿Por dónde viaja tu mensaje?" |
 | `portada-web-50ms.png` | Portada del anuncio "Tu página tiene 50 ms" |
 | `portada-bots-eliza.png` | Portada del anuncio "El primer chatbot de la historia" |
