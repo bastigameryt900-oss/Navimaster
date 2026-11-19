@@ -1,0 +1,12 @@
+{
+  "_nota": "Narración grabada por el cliente (ElevenLabs, voz 'Mauricio - Calm and Conversational'). Cada audio cubre estas líneas de guion.json.",
+  "audios": [
+    {"archivo": "01-gancho.mp3", "lineas": ["h1", "h2", "h3"]},
+    {"archivo": "02-parpadeo.mp3", "lineas": ["h4"]},
+    {"archivo": "03-estudio.mp3", "lineas": ["h5", "h6"]},
+    {"archivo": "04-tres-segundos.mp3", "lineas": ["h7", "h8", "h9"]},
+    {"archivo": "05-primera-impresion.mp3", "lineas": ["h10"]},
+    {"archivo": "06-cierre.mp3", "lineas": ["p1", "p2", "p3", "p4", "p5"]},
+    {"archivo": "07-mensaje.mp3", "lineas": ["p6", "p7", "p8"]}
+  ]
+}

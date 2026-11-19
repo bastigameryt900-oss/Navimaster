@@ -2,7 +2,8 @@
 
 Tres anuncios con el mismo formato que el de los cables submarinos (`../tiktok`): un dato curioso
 animado en 3D con narrador y subtítulos, y un corte a Aurora Studios con "si estás interesado, mándanos un mensaje".
-Cada uno vende un servicio distinto. Todo es original: animación (three.js), voz (Kokoro, local) y música.
+Cada uno vende un servicio distinto. Todo es original: animación (three.js), voz y música.
+El de páginas web usa la narración que grabaste en ElevenLabs (voz "Mauricio", en `web/voz/`); los otros dos usan la voz local Kokoro.
 
 | Carpeta | Tema | Vende | Duración | Video final |
 |---|---|---|---|---|
@@ -19,6 +20,17 @@ Las fuentes de cada dato están en el campo `_fuentes` de cada `guion.json`.
 - `<episodio>/episodio.json`: cortes de escena, tramos del video principal que se usan en el cierre, música y efectos.
 - `<episodio>/hook.html`: escenas 3D del gancho.
 - `scripts/tts.py` (voz), `scripts/audio.py` (mezcla), `scripts/render.mjs` (cuadros, video y archivo final).
+
+## Usar una voz grabada
+
+Pon los audios en `<episodio>/voz/` y anota en `voz/mapa.json` qué líneas de `guion.json` cubre cada uno
+(ver `web/voz/mapa.json`). Luego, en vez de `tts.py`:
+
+```bash
+python3 scripts/voz_externa.py web    # arma out/voz.wav y ubica los subtítulos en las pausas de la voz
+```
+
+Las escenas se ajustan solas a los nuevos tiempos; después sigue con `audio.py` y `render.mjs`.
 
 ## Generar un episodio
 
