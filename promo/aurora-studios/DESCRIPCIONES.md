@@ -40,7 +40,7 @@ En Aurora Studios hacemos que tu negocio también llegue rápido: páginas web, 
 
 ---
 
-## 3. Tu página tiene 50 milisegundos (páginas web, 37 s)
+## 3. Tu página tiene 50 milisegundos (páginas web, 42 s)
 `anuncios/web/out/aurora-studios-web-50ms.mp4`
 
 ⏱️ La gente decide si le gusta tu página web en solo 50 milisegundos, menos de lo que dura un parpadeo 👁️ Y si tarda más de 3 segundos en cargar, más de la mitad de las visitas desde el celular se va 📉

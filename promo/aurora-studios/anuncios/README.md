@@ -7,7 +7,7 @@ El de páginas web usa la narración que grabaste en ElevenLabs (voz "Mauricio",
 
 | Carpeta | Tema | Vende | Duración | Video final |
 |---|---|---|---|---|
-| `web/` | Decidimos si nos gusta una web en 50 ms; más de la mitad se va si tarda > 3 s | Páginas web | 37 s | `web/out/aurora-studios-web-50ms.mp4` |
+| `web/` | Decidimos si nos gusta una web en 50 ms; más de la mitad se va si tarda > 3 s | Páginas web | 42 s | `web/out/aurora-studios-web-50ms.mp4` |
 | `bots/` | ELIZA (1966), el primer chatbot, y la anécdota de la secretaria | Bots de Discord | 36 s | `bots/out/aurora-studios-bots-eliza.mp4` |
 | `juegos/` | Tennis for Two (1958) en un osciloscopio; hoy los juegos superan al cine + música | Juegos y apps | 35 s | `juegos/out/aurora-studios-juegos-1958.mp4` |
 
