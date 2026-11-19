@@ -1,113 +1,113 @@
 {
- "duracion": 37.139,
+ "duracion": 41.585,
  "lineas": [
   {
    "id": "h1",
    "texto": "¿Sabías que alguien decide",
    "ini": 0.25,
-   "fin": 1.736
+   "fin": 2.057
   },
   {
    "id": "h2",
    "texto": "si le gusta tu página web",
-   "ini": 1.766,
-   "fin": 3.347
+   "ini": 2.057,
+   "fin": 3.35
   },
   {
    "id": "h3",
    "texto": "en solo 50 milisegundos?",
-   "ini": 3.377,
-   "fin": 5.253
+   "ini": 3.71,
+   "fin": 5.95
   },
   {
    "id": "h4",
    "texto": "Es menos de lo que dura un parpadeo.",
-   "ini": 5.553,
-   "fin": 7.485
+   "ini": 6.25,
+   "fin": 8.357
   },
   {
    "id": "h5",
    "texto": "Lo descubrió un estudio en Canadá,",
-   "ini": 7.785,
-   "fin": 9.595
+   "ini": 8.657,
+   "fin": 10.577
   },
   {
    "id": "h6",
    "texto": "y estudios posteriores lo confirmaron.",
-   "ini": 9.625,
-   "fin": 11.801
+   "ini": 11.097,
+   "fin": 13.317
   },
   {
    "id": "h7",
    "texto": "Y si tu página tarda más de 3 segundos en cargar,",
-   "ini": 12.101,
-   "fin": 15.044
+   "ini": 13.617,
+   "fin": 16.657
   },
   {
    "id": "h8",
    "texto": "más de la mitad de las visitas desde el celular",
-   "ini": 15.094,
-   "fin": 17.57
+   "ini": 17.177,
+   "fin": 19.637
   },
   {
    "id": "h9",
    "texto": "se van antes de verla.",
-   "ini": 17.6,
-   "fin": 18.994
+   "ini": 19.997,
+   "fin": 21.496
   },
   {
    "id": "h10",
    "texto": "Tu página es tu primera impresión.",
-   "ini": 19.294,
-   "fin": 21.291
+   "ini": 21.796,
+   "fin": 24.137
   },
   {
    "id": "p1",
    "texto": "Aurora Studios",
-   "ini": 21.791,
-   "fin": 22.793
+   "ini": 24.637,
+   "fin": 25.757
   },
   {
    "id": "p2",
    "texto": "hace páginas web rápidas,",
-   "ini": 22.893,
-   "fin": 24.53
+   "ini": 26.177,
+   "fin": 27.817
   },
   {
    "id": "p3",
    "texto": "modernas y adaptadas a celulares,",
-   "ini": 24.56,
-   "fin": 26.56
+   "ini": 27.937,
+   "fin": 29.977
   },
   {
    "id": "p4",
    "texto": "con WhatsApp directo,",
-   "ini": 26.59,
-   "fin": 27.991
+   "ini": 30.257,
+   "fin": 31.297
   },
   {
    "id": "p5",
    "texto": "desde $70.000.",
-   "ini": 28.021,
-   "fin": 29.558
+   "ini": 31.617,
+   "fin": 33.627
   },
   {
    "id": "p6",
    "texto": "Si estás interesado,",
-   "ini": 29.808,
-   "fin": 31.125
+   "ini": 33.877,
+   "fin": 35.226
   },
   {
    "id": "p7",
    "texto": "mándanos un mensaje.",
-   "ini": 31.155,
-   "fin": 32.496
+   "ini": 35.226,
+   "fin": 36.297
   },
   {
    "id": "p8",
    "texto": "(no respondemos en 50 ms… pero casi)",
-   "ini": 32.696,
-   "fin": 35.639
+   "ini": 36.777,
+   "fin": 40.085
   }
  ]
 }
