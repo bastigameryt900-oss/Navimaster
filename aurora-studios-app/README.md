@@ -33,6 +33,14 @@ npm run build    # versión de producción
 npm start
 ```
 
+## Versión estática (para cualquier hosting)
+
+```bash
+npm run exportar   # genera la carpeta out/ con el sitio en HTML, CSS y JS
+```
+
+Sube **el contenido** de `out/` a la raíz del dominio en tu hosting (por ejemplo, `public_html`). No necesita Node ni nada instalado en el servidor.
+
 ## Publicarla en Vercel
 
 Importa el repositorio en Vercel y, en **Root Directory**, elige `aurora-studios-app`. Luego conecta el dominio `aurorastudios.shop`.

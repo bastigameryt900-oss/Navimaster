@@ -17,8 +17,10 @@ const NAV: { href: string; label: string; icon: IconKey }[] = [
   { href: "/contacto", label: "Contacto", icon: "message-circle" },
 ];
 
-const isActive = (pathname: string, href: string) =>
-  href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+const isActive = (pathname: string, href: string) => {
+  const path = pathname.replace(/\/+$/, "") || "/";
+  return href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`);
+};
 
 export function SiteHeader() {
   const pathname = usePathname();

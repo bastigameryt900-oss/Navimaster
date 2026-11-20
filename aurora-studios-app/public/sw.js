@@ -2,18 +2,36 @@
 // Páginas: primero la red (siempre lo más nuevo) y, si no hay conexión, la copia guardada.
 // Archivos de /_next/static: llevan huella en el nombre, así que se sirven desde la caché.
 
-const VERSION = "aurora-v1";
+const VERSION = "aurora-v2";
 const PAGES = ["/", "/servicios", "/cotizar", "/nosotros", "/contacto"];
+
+// Una respuesta que vino de una redirección no se puede usar para una navegación: se copia limpia.
+const clean = async (response) =>
+  response.redirected
+    ? new Response(await response.blob(), { status: response.status, statusText: response.statusText, headers: response.headers })
+    : response;
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(VERSION)
-      .then((cache) => cache.addAll(PAGES))
-      .catch(() => {})
+      .then((cache) =>
+        Promise.all(
+          PAGES.map((page) =>
+            fetch(page)
+              .then(async (response) => {
+                if (response.ok) await cache.put(new URL(response.url).pathname, await clean(response));
+              })
+              .catch(() => {}),
+          ),
+        ),
+      )
       .then(() => self.skipWaiting()),
   );
 });
+
+// La misma página puede pedirse como /servicios o /servicios/ según el hosting.
+const otherSlash = (pathname) => (pathname.endsWith("/") ? pathname.slice(0, -1) || "/" : `${pathname}/`);
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
@@ -45,7 +63,11 @@ self.addEventListener("fetch", (event) => {
           return response;
         })
         .catch(() =>
-          caches.match(request).then((hit) => hit || caches.match("/")).then((hit) => hit || Response.error()),
+          caches
+            .match(request, { ignoreSearch: true })
+            .then((hit) => hit || caches.match(otherSlash(url.pathname)))
+            .then((hit) => hit || caches.match("/"))
+            .then((hit) => hit || Response.error()),
         ),
     );
     return;
